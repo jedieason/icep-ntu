@@ -66,9 +66,7 @@ const Scene = () => {
             <color attach="background" args={['#ffffff']} />
             <ambientLight intensity={1.5} />
             <directionalLight position={[5, 3, 5]} intensity={3.0} />
-            <Suspense fallback={null}>
-                <Earth />
-            </Suspense>
+            <Earth />
         </>
     );
 };
@@ -78,10 +76,12 @@ const Earth3D = ({ children }) => {
         <div style={{ width: '100%', height: '100vh' }}>
             <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
                 <ScrollControls pages={5} damping={0.2}>
-                    <Scene />
-                    <Scroll html style={{ width: '100%' }}>
-                        {children}
-                    </Scroll>
+                    <Suspense fallback={null}>
+                        <Scene />
+                        <Scroll html style={{ width: '100%' }}>
+                            {children}
+                        </Scroll>
+                    </Suspense>
                 </ScrollControls>
             </Canvas>
         </div>
