@@ -11,28 +11,32 @@ const StudentZone = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        if (!database || !auth) return;
+
+        const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
         });
 
-        const dataRef = ref(database, 'icep-ntu');
-        const unsubscribeData = onValue(dataRef, (snapshot) => {
+        const studentRef = ref(database, 'icep-ntu');
+        const unsubscribeData = onValue(studentRef, (snapshot) => {
             const val = snapshot.val();
             if (val) {
                 setData(val);
-            } else {
-                // Handle empty data if needed
             }
             setLoading(false);
         });
 
         return () => {
-            unsubscribe();
+            unsubscribeAuth();
             unsubscribeData();
         };
     }, []);
 
     const handleLogin = async () => {
+        if (!auth) {
+            alert("Authentication service is not available.");
+            return;
+        }
         const provider = new GoogleAuthProvider();
         try {
             await signInWithPopup(auth, provider);
@@ -42,7 +46,9 @@ const StudentZone = () => {
     };
 
     const handleLogout = () => {
-        signOut(auth);
+        if (auth) {
+            signOut(auth);
+        }
     };
 
     const handleAttendanceChange = (name, date, value) => {

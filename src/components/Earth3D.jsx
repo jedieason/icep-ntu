@@ -20,7 +20,7 @@ const Earth = () => {
         earthRef.current.rotation.y += delta * 0.05;
 
         // Scroll based animation
-        const r1 = scroll.range(0, 1);
+        const r1 = scroll?.range ? scroll.range(0, 1) : 0;
 
         // Target rotation to face Taiwan (approximate)
         const targetRotationY = 4.5;
@@ -75,14 +75,14 @@ const Earth3D = ({ children }) => {
     return (
         <div style={{ width: '100%', height: '100vh' }}>
             <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-                <ScrollControls pages={5} damping={0.2}>
-                    <Suspense fallback={null}>
-                        <Scene />
+                <Suspense fallback={null}>
+                    <ScrollControls pages={5} damping={0.2}>
                         <Scroll html style={{ width: '100%' }}>
                             {children}
                         </Scroll>
-                    </Suspense>
-                </ScrollControls>
+                        <Scene />
+                    </ScrollControls>
+                </Suspense>
             </Canvas>
         </div>
     );
