@@ -60,9 +60,9 @@ const StudentZone = () => {
                 textAlign: 'center',
                 marginBottom: '2rem',
                 fontSize: '3rem',
-                background: 'linear-gradient(90deg, #00f0ff, #7000ff)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                fontWeight: '600',
+                color: '#1d1d1f',
+                letterSpacing: '-0.01em'
             }}>
                 Student Zone
             </h1>
@@ -79,7 +79,8 @@ const StudentZone = () => {
                 textAlign: 'center',
                 marginTop: '4rem',
                 marginBottom: '1rem',
-                color: '#00f0ff'
+                color: '#1d1d1f',
+                fontWeight: '600'
             }}>
                 Participation Analytics
             </h2>

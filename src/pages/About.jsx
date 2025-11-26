@@ -9,29 +9,25 @@ const Section = ({ title, children, style }) => (
         justifyContent: 'center',
         alignItems: 'flex-start',
         padding: '10% 15%',
-        color: '#2c3e50',
+        color: '#1d1d1f',
         ...style
     }}>
         {title && (
             <h2 style={{
                 fontSize: '3rem',
+                fontWeight: '600',
                 marginBottom: '2rem',
-                color: '#0056b3',
-                textShadow: 'none'
+                color: '#1d1d1f',
+                letterSpacing: '-0.01em'
             }}>
                 {title}
             </h2>
         )}
         <div style={{
-            fontSize: '1.2rem',
-            lineHeight: '1.8',
-            background: 'rgba(255, 255, 255, 0.8)',
-            padding: '2rem',
-            borderRadius: '16px',
-            border: '1px solid rgba(0, 86, 179, 0.1)',
-            backdropFilter: 'blur(5px)',
-            maxWidth: '800px',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+            fontSize: '1.3rem',
+            lineHeight: '1.6',
+            color: '#424245',
+            maxWidth: '800px'
         }}>
             {children}
         </div>
@@ -44,17 +40,17 @@ const About = () => {
             {/* Initial scroll space for zoom animation */}
             <div style={{ height: '150vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                 <h1 style={{
-                    fontSize: '5rem',
-                    fontWeight: 'bold',
+                    fontSize: '4rem',
+                    fontWeight: '600',
                     textAlign: 'center',
-                    color: '#0056b3',
-                    textShadow: '0 0 30px rgba(0, 86, 179, 0.2)',
+                    color: '#1d1d1f',
+                    letterSpacing: '-0.02em',
                     marginTop: '20vh'
                 }}>
                     ICEP<br />
-                    <span style={{ fontSize: '2rem', letterSpacing: '0.5em', color: '#2c3e50' }}>CHAPTER IN NTU</span>
+                    <span style={{ fontSize: '1.5rem', fontWeight: '400', letterSpacing: '0.2em', color: '#86868b', display: 'block', marginTop: '1rem' }}>CHAPTER IN NTU</span>
                 </h1>
-                <p style={{ marginTop: '2rem', color: '#555' }}>Scroll to explore</p>
+                <p style={{ marginTop: '2rem', color: '#86868b', fontSize: '1.2rem' }}>Scroll to explore</p>
             </div>
 
             <Section title="National Taiwan University College of Medicine">
@@ -73,13 +69,13 @@ const About = () => {
             <Section title="Pioneering Contributions">
                 <p>NTUCM and its teaching hospital, National Taiwan University Hospital (NTUH), have long been recognized as a hub for groundbreaking medical achievements that have influenced healthcare protocols worldwide:</p>
 
-                <h3 style={{ color: '#00f0ff', marginTop: '1rem' }}>Hepatitis Control & Liver Disease</h3>
+                <h3 style={{ color: '#1d1d1f', marginTop: '1rem', fontWeight: '600' }}>Hepatitis Control & Liver Disease</h3>
                 <p>NTUCM is world-renowned for its pivotal role in the fight against Hepatitis. The research team led by Professors Beasley and Chen Ding-shing proved the vertical transmission pathway of the Hepatitis B virus. This discovery laid the scientific foundation for Taiwan to launch the world’s first universal Hepatitis B vaccination program in 1984—a public health triumph that has since been adopted globally to prevent liver cancer.</p>
 
-                <h3 style={{ color: '#00f0ff', marginTop: '1rem' }}>Snake Venom Research</h3>
+                <h3 style={{ color: '#1d1d1f', marginTop: '1rem', fontWeight: '600' }}>Snake Venom Research</h3>
                 <p>Since the mid-20th century, the Pharmacological Institute at NTUCM has been a global leader in snake venom research. These studies have not only saved lives through antivenom development but have also isolated key proteins used in studying blood coagulation and nerve transmission mechanisms.</p>
 
-                <h3 style={{ color: '#00f0ff', marginTop: '1rem' }}>Clinical Innovation</h3>
+                <h3 style={{ color: '#1d1d1f', marginTop: '1rem', fontWeight: '600' }}>Clinical Innovation</h3>
                 <p>The institution remains at the forefront of critical care and surgery, boasting world-class achievements in organ transplantation, microsurgery, and ECMO (Extracorporeal Membrane Oxygenation) applications.</p>
             </Section>
 
