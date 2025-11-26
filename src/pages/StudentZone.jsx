@@ -52,12 +52,7 @@ const StudentZone = () => {
         });
     };
 
-    const handleParticipationChange = (name, date, value) => {
-        if (!user) return;
-        update(ref(database, `icep-ntu/participation/${name}`), {
-            [date]: parseInt(value)
-        });
-    };
+
 
     return (
         <div style={{ paddingTop: '80px', minHeight: '100vh', padding: '100px 2rem 2rem 2rem' }}>
@@ -78,7 +73,6 @@ const StudentZone = () => {
                 onLogin={handleLogin}
                 onLogout={handleLogout}
                 onAttendanceChange={handleAttendanceChange}
-                onParticipationChange={handleParticipationChange}
             />
 
             <h2 style={{
@@ -87,7 +81,7 @@ const StudentZone = () => {
                 marginBottom: '1rem',
                 color: '#00f0ff'
             }}>
-                Participation Analytics (3D)
+                Participation Analytics
             </h2>
             <p style={{ textAlign: 'center', color: '#aaa', marginBottom: '2rem' }}>
                 Drag to rotate the chart

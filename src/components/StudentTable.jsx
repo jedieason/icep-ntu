@@ -1,12 +1,11 @@
 import React from 'react';
 
-const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange, onParticipationChange }) => {
+const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange }) => {
     if (!data) return <div style={{ color: '#fff' }}>Loading data...</div>;
 
     // Extract dates and names
     // Assuming structure: attendance: { Name: { Date: bool } }
     const attendanceData = data?.attendance || {};
-    const participationData = data?.participation || {};
 
     const names = Object.keys(attendanceData);
     const dates = names.length > 0 ? Object.keys(attendanceData[names[0]]).sort() : [];
@@ -42,7 +41,6 @@ const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange, onPar
                                 <tr style={{ background: 'rgba(0, 0, 0, 0.02)' }}>
                                     <td style={tdStyle}>
                                         <strong>{name}</strong>
-                                        <div style={{ fontSize: '0.8em', color: '#aaa' }}>Attendance</div>
                                     </td>
                                     {dates.map(date => (
                                         <td key={date} style={tdStyle}>
@@ -51,35 +49,15 @@ const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange, onPar
                                                     type="checkbox"
                                                     checked={attendanceData[name]?.[date] || false}
                                                     onChange={(e) => onAttendanceChange(name, date, e.target.checked)}
-                                                    style={{ accentColor: '#00f0ff', transform: 'scale(1.5)' }}
+                                                    style={{ accentColor: '#0056b3', transform: 'scale(1.2)' }}
                                                 />
                                             ) : (
                                                 <span style={{
-                                                    color: attendanceData[name]?.[date] ? '#00ff00' : '#ff0000',
+                                                    color: attendanceData[name]?.[date] ? '#28a745' : '#dc3545',
                                                     fontSize: '1.2em'
                                                 }}>
-                                                    {attendanceData[name]?.[date] ? '✓' : '✗'}
+                                                    {attendanceData[name]?.[date] ? '●' : '○'}
                                                 </span>
-                                            )}
-                                        </td>
-                                    ))}
-                                </tr>
-                                {/* Participation Row */}
-                                <tr>
-                                    <td style={tdStyle}>
-                                        <div style={{ fontSize: '0.8em', color: '#aaa', textAlign: 'right' }}>Participation</div>
-                                    </td>
-                                    {dates.map(date => (
-                                        <td key={date} style={tdStyle}>
-                                            {user ? (
-                                                <input
-                                                    type="number"
-                                                    value={participationData[name]?.[date] || 0}
-                                                    onChange={(e) => onParticipationChange(name, date, e.target.value)}
-                                                    style={inputStyle}
-                                                />
-                                            ) : (
-                                                <span style={{ color: '#00f0ff' }}>{participationData[name]?.[date] || 0}</span>
                                             )}
                                         </td>
                                     ))}
