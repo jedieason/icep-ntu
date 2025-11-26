@@ -23,18 +23,16 @@ const Navbar = () => {
             justifyContent: 'space-between',
             alignItems: 'center',
             zIndex: 1000,
-            background: 'rgba(5, 5, 16, 0.8)',
+            background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(10px)',
-            borderBottom: '1px solid rgba(0, 240, 255, 0.1)'
+            borderBottom: '1px solid rgba(0, 86, 179, 0.1)'
         }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <img src="/images/logo.png" alt="ICEP Logo" style={{ height: '40px' }} />
+                <img src="/icep-ntu/images/logo.png" alt="ICEP Logo" style={{ height: '40px' }} />
                 <span style={{
                     fontSize: '1.2rem',
                     fontWeight: 'bold',
-                    background: 'linear-gradient(90deg, #00f0ff, #7000ff)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    color: '#0056b3'
                 }}>
                     ICEP - NTU
                 </span>
@@ -47,7 +45,7 @@ const Navbar = () => {
                         to={link.path}
                         style={{
                             position: 'relative',
-                            color: location.pathname === link.path ? '#00f0ff' : '#e0e0e0',
+                            color: location.pathname === link.path ? '#0056b3' : '#555',
                             textDecoration: 'none',
                             fontSize: '1rem',
                             fontWeight: 500,
@@ -63,8 +61,8 @@ const Navbar = () => {
                                     left: 0,
                                     right: 0,
                                     height: '2px',
-                                    background: '#00f0ff',
-                                    boxShadow: '0 0 10px #00f0ff'
+                                    background: '#0056b3',
+                                    boxShadow: '0 0 5px rgba(0, 86, 179, 0.3)'
                                 }}
                             />
                         )}

@@ -9,7 +9,7 @@ const Resources = () => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            background: 'url(/images/background.png) no-repeat center center fixed',
+            background: 'url(/icep-ntu/images/background.png) no-repeat center center fixed',
             backgroundSize: 'cover'
         }}>
             <div style={{
@@ -60,7 +60,7 @@ const Resources = () => {
 
                     {/* Background Download */}
                     <motion.a
-                        href="/images/background.png"
+                        href="/icep-ntu/images/background.png"
                         download
                         whileHover={{ scale: 1.05, boxShadow: '0 0 20px #7000ff' }}
                         whileTap={{ scale: 0.95 }}

@@ -43,30 +43,20 @@ const Earth = () => {
             <mesh>
                 <sphereGeometry args={[1.5, 64, 64]} />
                 <meshStandardMaterial
-                    color="#001e4d"
-                    emissive="#000a1a"
-                    roughness={0.4}
-                    metalness={0.6}
+                    color="#1a73e8"
+                    emissive="#000000"
+                    roughness={0.5}
+                    metalness={0.1}
                     wireframe={false}
-                />
-            </mesh>
-            {/* Wireframe overlay for tech feel */}
-            <mesh>
-                <sphereGeometry args={[1.51, 32, 32]} />
-                <meshBasicMaterial
-                    color="#00f0ff"
-                    wireframe={true}
-                    transparent={true}
-                    opacity={0.1}
                 />
             </mesh>
             {/* Atmosphere glow */}
             <mesh scale={[1.1, 1.1, 1.1]}>
                 <sphereGeometry args={[1.5, 32, 32]} />
                 <meshBasicMaterial
-                    color="#00f0ff"
+                    color="#4285f4"
                     transparent={true}
-                    opacity={0.05}
+                    opacity={0.1}
                     side={THREE.BackSide}
                 />
             </mesh>
@@ -77,9 +67,9 @@ const Earth = () => {
 const Scene = () => {
     return (
         <>
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} intensity={1.5} color="#00f0ff" />
-            <Stars radius={300} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+            <color attach="background" args={['#f8f9fa']} />
+            <ambientLight intensity={0.8} />
+            <pointLight position={[10, 10, 10]} intensity={1.5} color="#ffffff" />
             <Earth />
         </>
     );

@@ -12,17 +12,17 @@ const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange, onPar
     const dates = names.length > 0 ? Object.keys(attendanceData[names[0]]).sort() : [];
 
     return (
-        <div style={{ padding: '2rem', color: '#e0e0e0', background: 'rgba(5, 5, 16, 0.9)', borderRadius: '16px', border: '1px solid #00f0ff', boxShadow: '0 0 20px rgba(0, 240, 255, 0.2)' }}>
+        <div style={{ padding: '2rem', color: '#2c3e50', background: 'rgba(255, 255, 255, 0.9)', borderRadius: '16px', border: '1px solid #e0e0e0', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <h2 style={{ margin: 0, color: '#00f0ff' }}>Student Records</h2>
+                <h2 style={{ margin: 0, color: '#0056b3' }}>Student Records</h2>
                 <div>
                     {user ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                             <span>Logged in as {user.displayName} (Edit Mode)</span>
-                            <button onClick={handleLogout} style={buttonStyle}>Logout</button>
+                            <button onClick={onLogout} style={buttonStyle}>Logout</button>
                         </div>
                     ) : (
-                        <button onClick={handleLogin} style={buttonStyle}>Login with Google</button>
+                        <button onClick={onLogin} style={buttonStyle}>Login with Google</button>
                     )}
                 </div>
             </div>
@@ -39,7 +39,7 @@ const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange, onPar
                         {names.map(name => (
                             <React.Fragment key={name}>
                                 {/* Attendance Row */}
-                                <tr style={{ background: 'rgba(255, 255, 255, 0.05)' }}>
+                                <tr style={{ background: 'rgba(0, 0, 0, 0.02)' }}>
                                     <td style={tdStyle}>
                                         <strong>{name}</strong>
                                         <div style={{ fontSize: '0.8em', color: '#aaa' }}>Attendance</div>
@@ -96,20 +96,20 @@ const StudentTable = ({ data, user, onLogin, onLogout, onAttendanceChange, onPar
 const thStyle = {
     padding: '1rem',
     textAlign: 'center',
-    borderBottom: '1px solid #333',
-    color: '#00f0ff'
+    borderBottom: '1px solid #eee',
+    color: '#0056b3'
 };
 
 const tdStyle = {
     padding: '1rem',
     textAlign: 'center',
-    borderBottom: '1px solid #333'
+    borderBottom: '1px solid #eee'
 };
 
 const buttonStyle = {
     background: 'transparent',
-    border: '1px solid #00f0ff',
-    color: '#00f0ff',
+    border: '1px solid #0056b3',
+    color: '#0056b3',
     padding: '0.5rem 1rem',
     borderRadius: '4px',
     cursor: 'pointer',
@@ -118,9 +118,9 @@ const buttonStyle = {
 };
 
 const inputStyle = {
-    background: 'rgba(0, 0, 0, 0.5)',
-    border: '1px solid #555',
-    color: '#fff',
+    background: '#fff',
+    border: '1px solid #ccc',
+    color: '#333',
     padding: '0.2rem',
     width: '50px',
     textAlign: 'center',

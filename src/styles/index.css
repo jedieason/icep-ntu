@@ -1,9 +1,9 @@
 :root {
-  --color-bg: #050510;
-  --color-text: #e0e0e0;
-  --color-primary: #00f0ff;
-  --color-secondary: #7000ff;
-  --color-accent: #ff0055;
+  --color-bg: #f8f9fa;
+  --color-text: #2c3e50;
+  --color-primary: #0056b3;
+  --color-secondary: #d4af37;
+  --color-accent: #17a2b8;
   --font-main: 'Inter', sans-serif;
 }
 
@@ -28,8 +28,8 @@ a {
 }
 
 a:hover {
-  color: var(--color-accent);
-  text-shadow: 0 0 10px var(--color-accent);
+  color: var(--color-secondary);
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
 }
 
 /* Scrollbar */
@@ -42,10 +42,10 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-secondary);
+  background: var(--color-primary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+  background: var(--color-secondary);
 }

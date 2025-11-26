@@ -9,17 +9,15 @@ const Section = ({ title, children, style }) => (
         justifyContent: 'center',
         alignItems: 'flex-start',
         padding: '10% 15%',
-        color: '#fff',
+        color: '#2c3e50',
         ...style
     }}>
         {title && (
             <h2 style={{
                 fontSize: '3rem',
                 marginBottom: '2rem',
-                background: 'linear-gradient(90deg, #00f0ff, #fff)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textShadow: '0 0 20px rgba(0, 240, 255, 0.5)'
+                color: '#0056b3',
+                textShadow: 'none'
             }}>
                 {title}
             </h2>
@@ -27,12 +25,13 @@ const Section = ({ title, children, style }) => (
         <div style={{
             fontSize: '1.2rem',
             lineHeight: '1.8',
-            background: 'rgba(0, 0, 0, 0.6)',
+            background: 'rgba(255, 255, 255, 0.8)',
             padding: '2rem',
             borderRadius: '16px',
-            border: '1px solid rgba(0, 240, 255, 0.2)',
+            border: '1px solid rgba(0, 86, 179, 0.1)',
             backdropFilter: 'blur(5px)',
-            maxWidth: '800px'
+            maxWidth: '800px',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
         }}>
             {children}
         </div>
@@ -42,18 +41,20 @@ const Section = ({ title, children, style }) => (
 const About = () => {
     return (
         <Earth3D>
-            {/* First page is empty to show the Earth */}
-            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {/* Initial scroll space for zoom animation */}
+            <div style={{ height: '150vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                 <h1 style={{
                     fontSize: '5rem',
                     fontWeight: 'bold',
                     textAlign: 'center',
-                    color: '#fff',
-                    textShadow: '0 0 30px #00f0ff'
+                    color: '#0056b3',
+                    textShadow: '0 0 30px rgba(0, 86, 179, 0.2)',
+                    marginTop: '20vh'
                 }}>
                     ICEP<br />
-                    <span style={{ fontSize: '2rem', letterSpacing: '0.5em' }}>CHAPTER IN NTU</span>
+                    <span style={{ fontSize: '2rem', letterSpacing: '0.5em', color: '#2c3e50' }}>CHAPTER IN NTU</span>
                 </h1>
+                <p style={{ marginTop: '2rem', color: '#555' }}>Scroll to explore</p>
             </div>
 
             <Section title="National Taiwan University College of Medicine">

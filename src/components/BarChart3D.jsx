@@ -16,7 +16,7 @@ const Bar = ({ position, height, color, label, count }) => {
             <Text
                 position={[0, -0.5, 0.5]}
                 fontSize={0.3}
-                color="#ffffff"
+                color="#333333"
                 anchorX="center"
                 anchorY="top"
                 rotation={[-Math.PI / 4, 0, 0]}
@@ -27,7 +27,7 @@ const Bar = ({ position, height, color, label, count }) => {
             <Text
                 position={[0, actualHeight + 0.5, 0]}
                 fontSize={0.4}
-                color="#00f0ff"
+                color="#0056b3"
                 anchorX="center"
                 anchorY="bottom"
             >
@@ -51,11 +51,11 @@ const BarChart3D = ({ data }) => {
     if (!data) return null;
 
     return (
-        <div style={{ width: '100%', height: '500px', marginTop: '2rem', border: '1px solid rgba(0, 240, 255, 0.2)', borderRadius: '16px', overflow: 'hidden' }}>
+        <div style={{ width: '100%', height: '500px', marginTop: '2rem', border: '1px solid #e0e0e0', borderRadius: '16px', overflow: 'hidden', background: '#fff' }}>
             <Canvas camera={{ position: [5, 5, 10], fov: 50 }}>
-                <ambientLight intensity={0.5} />
+                <ambientLight intensity={0.8} />
                 <pointLight position={[10, 10, 10]} intensity={1} />
-                <spotLight position={[-10, 10, -10]} angle={0.3} penumbra={1} intensity={1} color="#00f0ff" />
+                <spotLight position={[-10, 10, -10]} angle={0.3} penumbra={1} intensity={1} color="#ffffff" />
 
                 <group position={[-chartData.length / 2, -1, 0]}>
                     {chartData.map((item, index) => (
@@ -71,8 +71,8 @@ const BarChart3D = ({ data }) => {
                     {/* Floor */}
                     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[chartData.length * 0.75 - 0.75, 0, 0]}>
                         <planeGeometry args={[chartData.length * 2 + 2, 10]} />
-                        <meshStandardMaterial color="#050510" transparent opacity={0.8} />
-                        <gridHelper args={[chartData.length * 2 + 2, chartData.length * 2 + 2, 0x00f0ff, 0x222222]} rotation={[-Math.PI / 2, 0, 0]} />
+                        <meshStandardMaterial color="#f8f9fa" transparent opacity={0.8} />
+                        <gridHelper args={[chartData.length * 2 + 2, chartData.length * 2 + 2, 0xcccccc, 0xeeeeee]} rotation={[-Math.PI / 2, 0, 0]} />
                     </mesh>
                 </group>
 
