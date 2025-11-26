@@ -7,7 +7,7 @@ import Resources from './pages/Resources';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/icep-ntu">
       <Navbar />
       <Routes>
         <Route path="/" element={<About />} />
