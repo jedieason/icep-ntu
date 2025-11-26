@@ -6,8 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: '/icep-ntu/',
   build: {
-    rollupOptions: {
-      input: 'index.dev.html'
-    }
+    outDir: 'dist',
+    assetsDir: 'assets',
   }
 })

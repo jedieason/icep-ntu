@@ -1,13 +1,13 @@
 import React, { useRef, useLayoutEffect, Suspense } from 'react';
-import { Canvas, useFrame, useLoader } from '@react-three/fiber';
-import { useScroll, ScrollControls, Stars, Scroll } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useScroll, ScrollControls, Stars, Scroll, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 const Earth = () => {
     const earthRef = useRef();
     const scroll = useScroll();
-    const [colorMap, normalMap, specularMap] = useLoader(THREE.TextureLoader, [
+    const [colorMap, normalMap, specularMap] = useTexture([
         'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg',
         'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg',
         'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg'
