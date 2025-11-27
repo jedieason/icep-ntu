@@ -44,6 +44,7 @@ const participationTableHead = document.querySelector('#participation-table thea
 
 const editControls = document.getElementById('edit-controls');
 const partEditControls = document.getElementById('part-edit-controls'); // New
+const participationWrapper = document.getElementById('participation-wrapper'); // New wrapper
 const loadingScreen = document.getElementById('loading-screen');
 const addDateBtn = document.getElementById('add-date-btn'); // May be removed from HTML, check if null
 const addStudentBtn = document.getElementById('add-student-btn');
@@ -537,8 +538,14 @@ onAuthStateChanged(auth, (user) => {
         if (userInfo) userInfo.classList.remove('hidden');
         if (userNameDisplay) userNameDisplay.textContent = user.displayName;
         isEditMode = true;
-        if (editControls) editControls.classList.remove('hidden');
-        if (partEditControls) partEditControls.classList.remove('hidden');
+        if (isEditMode) {
+            if (editControls) editControls.classList.remove('hidden');
+            if (partEditControls) partEditControls.classList.remove('hidden');
+            if (participationWrapper) participationWrapper.classList.remove('hidden'); // Show part table in edit mode
+        } else {
+            if (participationWrapper) participationWrapper.classList.add('hidden'); // Hide if not logged in (or make read-only?)
+            // User asked "Participation table is invisible when not logged in", implies it SHOULD be hidden.
+        }
     } else {
         // Logged out
         if (loginBtn) loginBtn.classList.remove('hidden');
@@ -546,6 +553,7 @@ onAuthStateChanged(auth, (user) => {
         isEditMode = false;
         if (editControls) editControls.classList.add('hidden');
         if (partEditControls) partEditControls.classList.add('hidden');
+        if (participationWrapper) participationWrapper.classList.add('hidden');
     }
     renderTables(); // Re-render to update editability
 });
@@ -733,37 +741,38 @@ function renderParticipationTable() {
 
 function renameDate(oldDate) {
     if (!currentUser) return;
-    const newDate = prompt("Rename date (YYYY-MM-DD):", oldDate);
-    if (!newDate || newDate === oldDate) return;
-    
-    // Regex check
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
-        alert("Invalid format. Use YYYY-MM-DD");
-        return;
-    }
+    showInputModal("Rename date (YYYY-MM-DD):", oldDate, (newDate) => {
+        if (!newDate || newDate === oldDate) return;
+        
+        // Regex check
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
+            alert("Invalid format. Use YYYY-MM-DD");
+            return;
+        }
 
-    const updates = {};
-    // Move data for all students
-    if (studentData.attendance) {
-        Object.keys(studentData.attendance).forEach(student => {
-            const val = studentData.attendance[student][oldDate];
-            if (val !== undefined) {
-                updates[`icep-ntu/attendance/${student}/${newDate}`] = val;
-                updates[`icep-ntu/attendance/${student}/${oldDate}`] = null;
-            }
-        });
-    }
-    if (studentData.participation) {
-        Object.keys(studentData.participation).forEach(student => {
-            const val = studentData.participation[student][oldDate];
-            if (val !== undefined) {
-                updates[`icep-ntu/participation/${student}/${newDate}`] = val;
-                updates[`icep-ntu/participation/${student}/${oldDate}`] = null;
-            }
-        });
-    }
-    
-    update(ref(db), updates).catch(err => alert(err.message));
+        const updates = {};
+        // Move data for all students
+        if (studentData.attendance) {
+            Object.keys(studentData.attendance).forEach(student => {
+                const val = studentData.attendance[student][oldDate];
+                if (val !== undefined) {
+                    updates[`icep-ntu/attendance/${student}/${newDate}`] = val;
+                    updates[`icep-ntu/attendance/${student}/${oldDate}`] = null;
+                }
+            });
+        }
+        if (studentData.participation) {
+            Object.keys(studentData.participation).forEach(student => {
+                const val = studentData.participation[student][oldDate];
+                if (val !== undefined) {
+                    updates[`icep-ntu/participation/${student}/${newDate}`] = val;
+                    updates[`icep-ntu/participation/${student}/${oldDate}`] = null;
+                }
+            });
+        }
+        
+        update(ref(db), updates).catch(err => alert(err.message));
+    });
 }
 
 function deleteDate(date, type) {
@@ -814,49 +823,55 @@ function toggleAttendance(student, date, currentStatus) {
 function editParticipation(student, studentPartData, dateOverride) {
     if (!currentUser) return;
 
+    const handleEdit = (date) => {
+        const currentVal = (studentPartData && studentPartData[date]) || 0;
+        showInputModal(`Enter participation count for ${student} on ${date}:`, currentVal, (newVal) => {
+            if (newVal === null) return;
+
+            const numVal = parseInt(newVal);
+            if (isNaN(numVal)) {
+                alert("Invalid number");
+                return;
+            }
+
+            const updates = {};
+            updates[`icep-ntu/participation/${student}/${date}`] = numVal;
+            update(ref(db), updates).catch(err => alert(err.message));
+        });
+    };
+
     // If date is passed from right-click, use it. Otherwise ask.
-    let date = dateOverride;
-    if (!date) {
-        date = prompt("Enter date to edit (YYYY-MM-DD):", "2025-11-15");
-        if (!date) return;
+    if (dateOverride) {
+        handleEdit(dateOverride);
+    } else {
+        showInputModal("Enter date to edit (YYYY-MM-DD):", "2025-11-15", (date) => {
+            if (!date) return;
+            handleEdit(date);
+        });
     }
-
-    const currentVal = (studentPartData && studentPartData[date]) || 0;
-    const newVal = prompt(`Enter participation count for ${student} on ${date}:`, currentVal);
-
-    if (newVal === null) return;
-
-    const numVal = parseInt(newVal);
-    if (isNaN(numVal)) {
-        alert("Invalid number");
-        return;
-    }
-
-    const updates = {};
-    updates[`icep-ntu/participation/${student}/${date}`] = numVal;
-    update(ref(db), updates).catch(err => alert(err.message));
 }
 
 // Add Student Function
 if (addStudentBtn) {
     addStudentBtn.addEventListener('click', () => {
         if (!currentUser) return;
-        const name = prompt("Enter new student name:");
-        if (!name) return;
-        
-        // We need to add an entry for this student.
-        // We can just add a dummy attendance record for the most recent date, or just let the render handle it if we update the data structure.
-        // But currently data structure is attendance/Student/Date.
-        // If we add a key under attendance/Student, they exist.
-        // Let's pick the first available date or today.
-        
-        const today = new Date().toISOString().slice(0, 10);
-        const updates = {};
-        updates[`icep-ntu/attendance/${name}/${today}`] = false; // Initialize as absent
-        
-        update(ref(db), updates)
-            .then(() => alert(`Student ${name} added!`))
-            .catch(err => alert(err.message));
+        showInputModal("Enter new student name:", "", (name) => {
+            if (!name) return;
+            
+            // We need to add an entry for this student.
+            // We can just add a dummy attendance record for the most recent date, or just let the render handle it if we update the data structure.
+            // But currently data structure is attendance/Student/Date.
+            // If we add a key under attendance/Student, they exist.
+            // Let's pick the first available date or today.
+            
+            const today = new Date().toISOString().slice(0, 10);
+            const updates = {};
+            updates[`icep-ntu/attendance/${name}/${today}`] = false; // Initialize as absent
+            
+            update(ref(db), updates)
+                .then(() => alert(`Student ${name} added!`))
+                .catch(err => alert(err.message));
+        });
     });
 }
 
@@ -864,30 +879,89 @@ if (addStudentBtn) {
 function addDate(type = 'attendance') {
     if (!currentUser) return;
 
-    const dateStr = prompt(`Enter new ${type} date (YYYY-MM-DD):`);
-    if (!dateStr) return;
+    showInputModal(`Enter new ${type} date (YYYY-MM-DD):`, "", (dateStr) => {
+        if (!dateStr) return;
 
-    // Validate date format
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateRegex.test(dateStr)) {
-        alert("Invalid format. Please use YYYY-MM-DD.");
-        return;
-    }
-
-    if (!studentData) return;
-    // Use attendance list as master student list
-    const students = Object.keys(studentData.attendance || {});
-
-    const updates = {};
-    students.forEach(student => {
-        if (type === 'attendance') {
-            updates[`icep-ntu/attendance/${student}/${dateStr}`] = false;
-        } else {
-            updates[`icep-ntu/participation/${student}/${dateStr}`] = 0;
+        // Validate date format
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(dateStr)) {
+            alert("Invalid format. Please use YYYY-MM-DD.");
+            return;
         }
-    });
 
-    update(ref(db), updates)
-        .then(() => alert(`${type} Date ${dateStr} added!`))
-        .catch(err => alert(err.message));
+        if (!studentData) return;
+        // Use attendance list as master student list
+        const students = Object.keys(studentData.attendance || {});
+
+        const updates = {};
+        students.forEach(student => {
+            if (type === 'attendance') {
+                updates[`icep-ntu/attendance/${student}/${dateStr}`] = false;
+            } else {
+                updates[`icep-ntu/participation/${student}/${dateStr}`] = 0;
+            }
+        });
+
+        update(ref(db), updates)
+            .then(() => alert(`${type} Date ${dateStr} added!`))
+            .catch(err => alert(err.message));
+    });
+}
+
+// Helper for Custom Input Modal
+function showInputModal(title, initialValue, callback) {
+    // Create modal elements if not exist
+    let modal = document.getElementById('custom-input-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'custom-input-modal';
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 10000;
+        `;
+        modal.innerHTML = `
+            <div style="background: white; padding: 30px; border-radius: 15px; width: 300px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <h3 id="modal-title" style="margin-bottom: 20px; color: var(--accent-color); font-family: var(--font-display);"></h3>
+                <input type="text" id="modal-input" style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <button id="modal-cancel" class="glow-btn small" style="background: #95a5a6; border-color: #95a5a6; color: white;">Cancel</button>
+                    <button id="modal-confirm" class="glow-btn small">Confirm</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    const titleEl = document.getElementById('modal-title');
+    const inputEl = document.getElementById('modal-input');
+    const cancelBtn = document.getElementById('modal-cancel');
+    const confirmBtn = document.getElementById('modal-confirm');
+    
+    titleEl.textContent = title;
+    inputEl.value = initialValue || '';
+    modal.style.display = 'flex';
+    inputEl.focus();
+    
+    const cleanup = () => {
+        modal.style.display = 'none';
+        cancelBtn.onclick = null;
+        confirmBtn.onclick = null;
+        inputEl.onkeydown = null;
+    };
+
+    cancelBtn.onclick = () => {
+        cleanup();
+        callback(null);
+    };
+    
+    confirmBtn.onclick = () => {
+        const val = inputEl.value;
+        cleanup();
+        callback(val);
+    };
+    
+    inputEl.onkeydown = (e) => {
+        if (e.key === 'Enter') confirmBtn.click();
+        if (e.key === 'Escape') cancelBtn.click();
+    };
 }
