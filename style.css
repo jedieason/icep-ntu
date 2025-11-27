@@ -864,6 +864,8 @@ tr:hover td {
         border-radius: 2px;
         transition: all 0.3s ease;
     }
+    
+    /* Mobile Menu Overlay */
     .mobile-menu-overlay {
         display: flex !important; /* Enable flex layout */
         position: fixed;
