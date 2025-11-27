@@ -89,7 +89,7 @@ nav {
 /* Hide Mobile Menu on Desktop */
 .hamburger-menu,
 .mobile-menu-overlay {
-    display: none;
+    display: none !important;
 }
 
 .logo-container {

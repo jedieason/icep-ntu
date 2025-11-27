@@ -750,7 +750,11 @@ function renderParticipationTable() {
         th.textContent = date.slice(5); // MM-DD
         if (isEditMode) {
             th.classList.add('editable');
-            th.title = "Right-click to delete";
+            th.title = "Click to rename, Right-click to delete";
+            
+            // Add click listener for renaming
+            th.onclick = () => renameDate(date);
+
             th.oncontextmenu = (e) => {
                 e.preventDefault();
                 if (confirm(`Delete participation date ${date}?`)) {
