@@ -4,10 +4,14 @@
     --accent-secondary: #34495e;
     --text-primary: #1a1a1a;
     --text-secondary: #555555;
-    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    /* Increased opacity */
     --glass-border: rgba(0, 0, 0, 0.05);
-    --font-main: 'Inter', sans-serif;
-    --font-display: 'Orbitron', sans-serif;
+    --font-main: 'Inter',
+        sans-serif;
+    --font-display: 'Playfair Display',
+        serif;
+    /* Elegant Serif */
 }
 
 * {
@@ -78,8 +82,8 @@ nav {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), transparent);
-    backdrop-filter: blur(5px);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+    transition: background 0.3s ease;
 }
 
 .logo-container {
@@ -145,6 +149,15 @@ nav {
     overflow: hidden;
 }
 
+/* Section Visibility Logic */
+main>section {
+    display: none;
+}
+
+main>section.active {
+    display: block;
+}
+
 #earth-container {
     position: fixed;
     top: 0;
@@ -188,8 +201,8 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    /* Semi-transparent white */
+    background: rgba(255, 255, 255, 0.85);
+    /* Higher opacity white */
 }
 
 /* White Gradient Overlay at Top */
@@ -227,6 +240,7 @@ nav {
     font-size: 5rem;
     background: linear-gradient(45deg, var(--text-primary), var(--accent-color));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 10px;
     opacity: 0;
@@ -521,6 +535,8 @@ tr:hover td {
     align-items: flex-end;
     justify-content: space-around;
     padding: 20px;
+    overflow-x: auto; /* Enable horizontal scroll if too narrow */
+    min-width: 100%;  /* Ensure it takes full width */
 }
 
 .bar-container {
@@ -656,4 +672,127 @@ tr:hover td {
         display: none;
         /* Mobile menu implementation omitted for brevity, could add hamburger */
     }
+}
+
+/* Quiz Styles */
+#quiz {
+    display: none;
+    min-height: 100vh;
+    background: var(--bg-color);
+    justify-content: center;
+    align-items: center;
+}
+
+#quiz.active {
+    display: flex;
+}
+
+#quiz-container {
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    margin: 0 auto; /* Center container itself */
+}
+
+.quiz-content {
+    max-width: 600px;
+    text-align: center;
+    margin: 0 auto; /* Center content within container */
+}
+
+.quiz-question-text {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    /* Larger, more elegant */
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 40px;
+    line-height: 1.4;
+}
+
+.quiz-option {
+    display: block;
+    width: 100%;
+    max-width: 500px; /* Restrict width for centering */
+    margin: 20px auto; /* Center horizontally */
+    padding: 20px 30px;
+    /* Minimalist: Simple border, transparent bg */
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    background: transparent; /* No background color */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: var(--font-main);
+    color: var(--text-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.quiz-option:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-option.correct {
+    background: transparent;
+    color: #27ae60; /* Lower saturation green */
+    border: 3px solid #27ae60; /* Thicker border */
+    box-shadow: 0 0 15px rgba(39, 174, 96, 0.2);
+}
+
+.quiz-option.incorrect {
+    background: transparent;
+    color: #c0392b; /* Lower saturation red */
+    border: 3px solid #c0392b; /* Thicker border */
+    box-shadow: 0 0 15px rgba(192, 57, 43, 0.2);
+}
+
+.quiz-progress {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Checkbox Style Attendance */
+.checkbox-cell {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+    /* Ensure click area */
+}
+
+.custom-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--text-secondary);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    position: relative;
+    background: white;
+}
+
+.custom-checkbox.checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.custom-checkbox.checked::after {
+    content: ''; /* Removed emoji checkmark */
+    width: 10px;
+    height: 5px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Zone - ICEP NTU</title>
+    <link rel="icon" href="../images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- Scripts -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/",
+          "cannon-es": "https://unpkg.com/cannon-es@0.20.0/dist/cannon-es.js"
+        }
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">LOADING STUDENT ZONE...</div>
+    </div>
+
+    <nav class="light-nav">
+        <div class="logo-container">
+            <img src="../images/logo.png" alt="NTU Medicine Logo" class="nav-logo">
+            <span class="nav-title">ICEP | NTU</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">About</a>
+            <a href="#" class="nav-link active">Student Zone</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- STUDENT ZONE (Visible by default here) -->
+        <section id="student" class="active" style="display: block !important; margin-top: 0px; padding-top: 120px;">
+            <div class="glass-panel">
+                <div class="student-header">
+                    <h2>Student Zone</h2>
+                    <div id="auth-container">
+                        <div id="user-info" class="hidden">
+                            <span id="user-name"></span>
+                            <button id="logout-btn" class="glow-btn small">Logout</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-container">
+                    <div class="table-wrapper">
+                        <h3>Attendance & Participation</h3>
+                        <div id="edit-controls" class="hidden">
+                            <span class="mode-badge">EDIT MODE ACTIVE</span>
+                            <button id="add-date-btn" class="glow-btn small" style="margin-right: 10px;">+ Add
+                                Date</button>
+                            <p class="instruction">Click on cells to toggle attendance or edit participation scores.</p>
+                        </div>
+                        <table id="student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <!-- Dates will be injected here -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h3>Participation</h3>
+                    <div id="chart-container"></div>
+                </div>
+
+                <div class="resources-content"
+                    style="margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--glass-border);">
+                    <h2>Resources</h2>
+                    <div class="resource-grid">
+                        <a href="https://calendar.google.com/calendar/u/1?cid=aWNlZ2xvYmFscHJvZ3JhbUBnbWFpbC5jb20"
+                            target="_blank" class="resource-card">
+                            <div class="icon"></div>
+                            <h3>Shared Calendar</h3>
+                            <p>Access the ICEP event schedule.</p>
+                        </a>
+                        <a href="../images/background.png" download class="resource-card">
+                            <div class="icon"></div>
+                            <h3>Meeting Background</h3>
+                            <p>Download the official virtual background.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Use same script but might need logic adjustment for separate page -->
+    <script type="module" src="../script.js"></script>
+</body>
+
+</html>
+

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
@@ -34,21 +34,20 @@
         <div class="loading-text">WELCOME TO NTU...</div>
     </div>
 
-    <nav>
+    <nav class="light-nav">
         <div class="logo-container">
             <img src="images/logo.png" alt="NTU Medicine Logo" class="nav-logo">
             <span class="nav-title">ICEP | NTU</span>
         </div>
         <div class="nav-links">
-            <a href="#about" class="nav-link active">About</a>
-            <a href="#student" class="nav-link">Student Zone</a>
-            <a href="#resources" class="nav-link">Resources</a>
+            <a href="#" class="nav-link active" data-target="about">About</a>
+            <a href="student/index.html" class="nav-link">Student Zone</a>
         </div>
     </nav>
 
     <main>
         <!-- SECTION 1: ABOUT -->
-        <section id="about">
+        <section id="about" class="active">
             <div id="earth-container"></div>
 
             <!-- Dynamic Backgrounds -->
@@ -56,6 +55,7 @@
                 <div class="bg-slide" style="background-image: url('images/show1.png'); opacity: 0;"></div>
                 <div class="bg-slide" style="background-image: url('images/show2.png'); opacity: 0;"></div>
                 <div class="bg-slide" style="background-image: url('images/show3.png'); opacity: 0;"></div>
+                <div class="bg-slide" style="background-image: url('images/show4.png'); opacity: 0;"></div>
                 <div class="bg-slide" style="background-image: url('images/show4.png'); opacity: 0;"></div>
             </div>
 
@@ -123,72 +123,27 @@
                         It remains a vital partner in the international medical community, committed to solving the
                         health challenges of the 21st century.</p>
                 </div>
-            </div>
-        </section>
 
-        <!-- SECTION 2: STUDENT ZONE -->
-        <section id="student">
-            <div class="glass-panel">
-                <div class="student-header">
-                    <h2>Student Zone</h2>
-                    <div id="auth-container">
-                        <button id="login-btn" class="glow-btn">
-                            <span class="btn-text">Login with Google</span>
-                        </button>
-                        <div id="user-info" class="hidden">
-                            <span id="user-name"></span>
-                            <button id="logout-btn" class="glow-btn small">Logout</button>
+                <!-- QUIZ BLOCK (Moved inside About) -->
+                <div class="info-block" id="quiz-block">
+                    <div id="quiz-container" style="pointer-events: auto;">
+                        <div class="quiz-content">
+                            <h2>Test Your Knowledge</h2>
+                            <div id="quiz-question-container">
+                                <!-- Questions injected here -->
+                            </div>
+                            <div id="quiz-results" class="hidden">
+                                <h3>Quiz Complete!</h3>
+                                <p>Your Score: <span id="score-display">0</span>/5</p>
+                                <button id="restart-quiz" class="glow-btn">Try Again</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="data-container">
-                    <div class="table-wrapper">
-                        <h3>Attendance & Participation</h3>
-                        <div id="edit-controls" class="hidden">
-                            <span class="mode-badge">EDIT MODE ACTIVE</span>
-                            <p class="instruction">Click on cells to toggle attendance or edit participation scores.</p>
-                        </div>
-                        <table id="student-table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <!-- Dates will be injected here -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Rows will be injected here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="chart-section">
-                    <h3>Participation</h3>
-                    <div id="chart-container"></div>
-                </div>
             </div>
         </section>
 
-        <!-- SECTION 3: RESOURCES -->
-        <section id="resources">
-            <div class="resources-content">
-                <h2>Resources</h2>
-                <div class="resource-grid">
-                    <a href="https://calendar.google.com/calendar/u/1?cid=aWNlZ2xvYmFscHJvZ3JhbUBnbWFpbC5jb20"
-                        target="_blank" class="resource-card">
-                        <div class="icon"></div>
-                        <h3>Shared Calendar</h3>
-                        <p>Access the ICEP event schedule.</p>
-                    </a>
-                    <a href="images/background.png" download class="resource-card">
-                        <div class="icon"></div>
-                        <h3>Meeting Background</h3>
-                        <p>Download the official virtual background.</p>
-                    </a>
-                </div>
-            </div>
-        </section>
+        <!-- SECTION 2: STUDENT ZONE REMOVED (Moved to student/index.html) -->
     </main>
 
     <script type="module" src="script.js"></script>
