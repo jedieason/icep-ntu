@@ -851,7 +851,7 @@ tr:hover td {
         flex-direction: column;
         justify-content: space-around;
         width: 25px;
-        height: 20px;
+        height: 21px;
         cursor: pointer;
         z-index: 1002;
         /* Ensure visibility against background */
@@ -905,12 +905,12 @@ tr:hover td {
 
     /* Hamburger Animation when Active */
     .hamburger-menu.active .hamburger-line:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
+        transform: rotate(45deg) translate(5px, 5px); /* Adjusted translation */
     }
     .hamburger-menu.active .hamburger-line:nth-child(2) {
         opacity: 0;
     }
     .hamburger-menu.active .hamburger-line:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
+        transform: rotate(-45deg) translate(5px, -5px); /* Adjusted translation */
     }
 }
