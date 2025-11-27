@@ -288,6 +288,12 @@ function initEarth() {
             onUpdate: (self) => {
                 document.querySelector('.hero-text').style.opacity = 1 - self.progress;
                 document.getElementById('earth-container').style.opacity = 1 - self.progress; // Fade earth too
+            },
+            onEnterBack: () => {
+                // Hide all backgrounds when returning to top (Hero)
+                bgSlides.forEach((bg) => {
+                    gsap.to(bg, { opacity: 0, duration: 0.5 });
+                });
             }
         });
 
