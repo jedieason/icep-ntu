@@ -1,17 +1,197 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/icep-ntu/images/logo.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ICEP - Chapter in National Taiwan University</title>
-  <script type="module" crossorigin src="/icep-ntu/assets/index-CjAoPx00.js"></script>
-  <link rel="stylesheet" crossorigin href="/icep-ntu/assets/index-DhpvyEup.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICEP - Chapter in National Taiwan University</title>
+    <link rel="icon" href="images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/",
+          "cannon-es": "https://unpkg.com/cannon-es@0.20.0/dist/cannon-es.js"
+        }
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
-  <div id="root"></div>
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">WELCOME TO NTU...</div>
+    </div>
+
+    <nav>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="NTU Medicine Logo" class="nav-logo">
+            <span class="nav-title">ICEP | NTU</span>
+        </div>
+        <div class="nav-links">
+            <a href="#about" class="nav-link active">About</a>
+            <a href="#student" class="nav-link">Student Zone</a>
+            <a href="#resources" class="nav-link">Resources</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- SECTION 1: ABOUT -->
+        <section id="about">
+            <div id="earth-container"></div>
+
+            <!-- Dynamic Backgrounds -->
+            <div id="bg-container">
+                <div class="bg-slide" style="background-image: url('images/show1.png'); opacity: 0;"></div>
+                <div class="bg-slide" style="background-image: url('images/show2.png'); opacity: 0;"></div>
+                <div class="bg-slide" style="background-image: url('images/show3.png'); opacity: 0;"></div>
+                <div class="bg-slide" style="background-image: url('images/show4.png'); opacity: 0;"></div>
+            </div>
+
+            <div class="scroll-content">
+                <div class="hero-text">
+                    <h1>ICEP</h1>
+                    <h2>National Taiwan University</h2>
+                    <div class="scroll-hint">Scroll to Explore</div>
+                </div>
+
+                <div class="info-block" id="info-1">
+                    <h3>National Taiwan University College of Medicine</h3>
+                    <h4>A Legacy of Excellence in Asian Healthcare</h4>
+                    <p><strong>Overview</strong><br>The National Taiwan University College of Medicine (NTUCM) stands as
+                        the premier institution for medical education and research in Taiwan. Located in the heart of
+                        Taipei, it is the cornerstone of the National Taiwan University (NTU) system—the most
+                        prestigious comprehensive university in the nation. For over a century, NTUCM has served as the
+                        cradle of Taiwan’s medical leadership, dedicated to cultivating elite physicians and scientists
+                        who drive the advancement of global health.</p>
+                </div>
+
+                <div class="info-block" id="info-2">
+                    <h3>A Century of Heritage</h3>
+                    <p>The history of NTUCM mirrors the evolution of modern medicine in Taiwan. Its origins date back to
+                        1897 with the founding of the Medical Training Institute. It was later established as the
+                        Faculty of Medicine under Taihoku Imperial University in 1936 during the Japanese era, and
+                        subsequently renamed National Taiwan University College of Medicine in 1945. The campus itself
+                        is a testament to this rich history. The original medical building, a designated historic
+                        monument built in the Renaissance style, stands in dialogue with modern research facilities,
+                        symbolizing the college's philosophy: a commitment to scientific innovation grounded in deep
+                        humanistic traditions.</p>
+                </div>
+
+                <div class="info-block" id="info-3">
+                    <h3>Pioneering Contributions to Global Medicine</h3>
+                    <p>NTUCM and its teaching hospital, National Taiwan University Hospital (NTUH), have long been
+                        recognized as a hub for groundbreaking medical achievements that have influenced healthcare
+                        protocols worldwide:</p>
+                    <ul>
+                        <li><strong>Hepatitis Control & Liver Disease:</strong> NTUCM is world-renowned for its pivotal
+                            role in the fight against Hepatitis. The research team led by Professors Beasley and Chen
+                            Ding-shing proved the vertical transmission pathway of the Hepatitis B virus. This discovery
+                            laid the scientific foundation for Taiwan to launch the world’s first universal Hepatitis B
+                            vaccination program in 1984—a public health triumph that has since been adopted globally to
+                            prevent liver cancer.</li>
+                        <li><strong>Snake Venom Research:</strong> Since the mid-20th century, the Pharmacological
+                            Institute at NTUCM has been a global leader in snake venom research. These studies have not
+                            only saved lives through antivenom development but have also isolated key proteins used in
+                            studying blood coagulation and nerve transmission mechanisms.</li>
+                        <li><strong>Clinical Innovation:</strong> The institution remains at the forefront of critical
+                            care and surgery, boasting world-class achievements in organ transplantation, microsurgery,
+                            and ECMO (Extracorporeal Membrane Oxygenation) applications.</li>
+                    </ul>
+                </div>
+
+                <div class="info-block" id="info-4">
+                    <h3>Taiwan’s Role in the International Medical Community</h3>
+                    <p>Situated at a critical geographic and technological nexus in Asia, Taiwan offers a unique
+                        environment for medical study. The nation is celebrated for its National Health Insurance (NHI)
+                        system, which provides universal coverage with high efficiency and accessibility, frequently
+                        ranked among the best in the world. Furthermore, Taiwan’s robust IT industry allows for the
+                        seamless integration of smart medicine and big data analytics into clinical practice.</p>
+                    <p>As the leading medical institution in this dynamic environment, NTUCM continues to bridge East
+                        and West, combining advanced biomedical technology with comprehensive public health strategies.
+                        It remains a vital partner in the international medical community, committed to solving the
+                        health challenges of the 21st century.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: STUDENT ZONE -->
+        <section id="student">
+            <div class="glass-panel">
+                <div class="student-header">
+                    <h2>Student Zone</h2>
+                    <div id="auth-container">
+                        <button id="login-btn" class="glow-btn">
+                            <span class="btn-text">Login with Google</span>
+                        </button>
+                        <div id="user-info" class="hidden">
+                            <span id="user-name"></span>
+                            <button id="logout-btn" class="glow-btn small">Logout</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="data-container">
+                    <div class="table-wrapper">
+                        <h3>Attendance & Participation</h3>
+                        <div id="edit-controls" class="hidden">
+                            <span class="mode-badge">EDIT MODE ACTIVE</span>
+                            <p class="instruction">Click on cells to toggle attendance or edit participation scores.</p>
+                        </div>
+                        <table id="student-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <!-- Dates will be injected here -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h3>Participation</h3>
+                    <div id="chart-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: RESOURCES -->
+        <section id="resources">
+            <div class="resources-content">
+                <h2>Resources</h2>
+                <div class="resource-grid">
+                    <a href="https://calendar.google.com/calendar/u/1?cid=aWNlZ2xvYmFscHJvZ3JhbUBnbWFpbC5jb20"
+                        target="_blank" class="resource-card">
+                        <div class="icon"></div>
+                        <h3>Shared Calendar</h3>
+                        <p>Access the ICEP event schedule.</p>
+                    </a>
+                    <a href="images/background.png" download class="resource-card">
+                        <div class="icon"></div>
+                        <h3>Meeting Background</h3>
+                        <p>Download the official virtual background.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>
