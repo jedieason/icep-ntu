@@ -490,13 +490,8 @@ tr:hover td {
     position: relative;
 }
 
-.editable:hover::after {
-    content: '✎';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 0.7rem;
-    color: var(--accent-color);
+.editable:hover {
+    background-color: rgba(44, 62, 80, 0.05); /* Light hover background */
 }
 
 .mode-badge {

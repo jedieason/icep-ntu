@@ -60,23 +60,45 @@
                 </div>
 
                 <div class="data-container">
+                    <!-- Attendance Table (Rows=Dates, Cols=Students) -->
                     <div class="table-wrapper">
-                        <h3>Attendance & Participation</h3>
-                        <div id="edit-controls" class="hidden">
-                            <span class="mode-badge">EDIT MODE ACTIVE</span>
-                            <button id="add-date-btn" class="glow-btn small" style="margin-right: 10px;">+ Add
-                                Date</button>
-                            <p class="instruction">Click on cells to toggle attendance or edit participation scores.</p>
+                        <h3>Attendance</h3>
+                        <div id="edit-controls" class="hidden" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <span class="mode-badge">EDIT MODE ACTIVE</span>
+                                <p class="instruction">Click to toggle attendance. Dates are rows.</p>
+                            </div>
+                            <button id="add-student-btn" class="glow-btn small">+ Add Student</button>
                         </div>
-                        <table id="student-table">
+                        <table id="attendance-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <!-- Students will be injected here -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows (Dates) will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Participation Table (Rows=Students, Cols=Dates) -->
+                    <div class="table-wrapper" style="margin-top: 50px;">
+                        <h3>Participation</h3>
+                        <div id="part-edit-controls" class="hidden" style="margin-bottom: 10px;">
+                             <p class="instruction">Click cells to edit scores.</p>
+                        </div>
+                        <table id="participation-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <!-- Dates will be injected here -->
+                                    <!-- + Add Date Column -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Rows will be injected here -->
+                                <!-- Rows (Students) will be injected here -->
                             </tbody>
                         </table>
                     </div>

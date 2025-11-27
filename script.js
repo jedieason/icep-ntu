@@ -35,11 +35,18 @@ const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const userInfo = document.getElementById('user-info');
 const userNameDisplay = document.getElementById('user-name');
-const studentTableBody = document.querySelector('#student-table tbody');
-const studentTableHead = document.querySelector('#student-table thead tr');
+// Attendance Table (Rows=Dates)
+const attendanceTableBody = document.querySelector('#attendance-table tbody');
+const attendanceTableHead = document.querySelector('#attendance-table thead tr');
+// Participation Table (Rows=Students)
+const participationTableBody = document.querySelector('#participation-table tbody');
+const participationTableHead = document.querySelector('#participation-table thead tr');
+
 const editControls = document.getElementById('edit-controls');
+const partEditControls = document.getElementById('part-edit-controls'); // New
 const loadingScreen = document.getElementById('loading-screen');
-const addDateBtn = document.getElementById('add-date-btn');
+const addDateBtn = document.getElementById('add-date-btn'); // May be removed from HTML, check if null
+const addStudentBtn = document.getElementById('add-student-btn');
 const navLinks = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('main > section');
 
@@ -531,14 +538,16 @@ onAuthStateChanged(auth, (user) => {
         if (userNameDisplay) userNameDisplay.textContent = user.displayName;
         isEditMode = true;
         if (editControls) editControls.classList.remove('hidden');
+        if (partEditControls) partEditControls.classList.remove('hidden');
     } else {
         // Logged out
         if (loginBtn) loginBtn.classList.remove('hidden');
         if (userInfo) userInfo.classList.add('hidden');
         isEditMode = false;
         if (editControls) editControls.classList.add('hidden');
+        if (partEditControls) partEditControls.classList.add('hidden');
     }
-    renderTable(); // Re-render to update editability
+    renderTables(); // Re-render to update editability
 });
 
 // Database
@@ -547,39 +556,40 @@ onValue(dbRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
         studentData = data;
-        renderTable();
+        renderTables();
         calculateAndRenderChart();
     }
 });
 
-function renderTable() {
-    if (!studentData) return;
+function renderTables() {
+    renderAttendanceTable();
+    renderParticipationTable();
+}
+
+function renderAttendanceTable() {
+    if (!studentData || !attendanceTableHead || !attendanceTableBody) return;
 
     const attendance = studentData.attendance || {};
-    const participation = studentData.participation || {};
+    // Get all students (union of keys) - These are COLUMNS
+    const students = Object.keys(attendance).sort();
 
-    // Get all students (union of keys)
-    const students = [...new Set([...Object.keys(attendance), ...Object.keys(participation)])];
-
-    // Get all dates from attendance (assuming consistent dates across students, but let's gather all unique dates)
+    // Get all dates from attendance - These are ROWS
     let dates = new Set();
     Object.values(attendance).forEach(record => {
         Object.keys(record).forEach(date => dates.add(date));
     });
     dates = Array.from(dates).sort();
 
-    // Render Header
-    // Transposed: Header = "Date" + Student Names
-    studentTableHead.innerHTML = '<th>Date</th>';
+    // Render Header (Date + Student Names)
+    attendanceTableHead.innerHTML = '<th>Date</th>';
     students.forEach(student => {
         const th = document.createElement('th');
         th.textContent = student;
-        studentTableHead.appendChild(th);
+        attendanceTableHead.appendChild(th);
     });
 
-    // Render Body
-    // Transposed: Rows = Dates
-    studentTableBody.innerHTML = '';
+    // Render Body (Rows = Dates)
+    attendanceTableBody.innerHTML = '';
     dates.forEach(date => {
         const tr = document.createElement('tr');
 
@@ -587,80 +597,192 @@ function renderTable() {
         const tdDate = document.createElement('td');
         tdDate.textContent = date.slice(5); // MM-DD
         tdDate.style.fontWeight = "bold";
+        
+        if (isEditMode) {
+            tdDate.classList.add('editable');
+            tdDate.onclick = () => renameDate(date); // Rename date logic applies here
+            tdDate.oncontextmenu = (e) => {
+                e.preventDefault();
+                if (confirm(`Delete attendance date ${date}?`)) {
+                    deleteDate(date, 'attendance');
+                }
+            };
+        }
         tr.appendChild(tdDate);
 
-        // Student Columns
+        // Student Columns (Checkboxes)
         students.forEach(student => {
             const td = document.createElement('td');
-            
-            // Check if we are rendering attendance or participation table
-            // Currently we are mixing them in one table? 
-            // The current code renders checkboxes for attendance.
-            // The prompt asks for editable participation column too.
-            // Let's assume the table structure remains: Date | Student1 | Student2 ...
-            // But wait, participation is a separate metric. 
-            // Usually participation is a number per date.
-            // Let's render checkboxes for attendance.
-            // AND if edit mode is on, allow clicking to toggle.
-            
-            // If we want to edit participation, maybe we need a different view or mode.
-            // For now, let's keep the checkbox logic but add a way to edit participation if requested.
-            // Actually, the prompt says "participation 欄位也可以編輯（在編輯者視角也是填入日期）"
-            // This suggests we might want to edit participation INSTEAD of or BESIDES attendance?
-            // The current table is "Attendance & Participation" but only shows checkboxes.
-            // Let's stick to the current implementation where clicking toggles attendance.
-            // To edit participation, we previously had a separate function triggered somehow?
-            // Ah, the prompt says "participation 欄位也可以編輯". 
-            // Maybe we should add a right-click or shift-click to edit participation score?
-            // Or maybe simply display participation score if it exists?
-            
-            // Let's try to display both if space allows, or just attendance for now.
-            // The user said "participation 欄位也可以編輯". 
-            // Let's assume the user wants to be able to edit the participation NUMBER.
-            // Let's add a listener for right click to edit participation.
-
             const isPresent = attendance[student] && attendance[student][date];
-            const partScore = (participation[student] && participation[student][date]) || 0;
 
             const cellDiv = document.createElement('div');
             cellDiv.className = 'checkbox-cell';
-            cellDiv.style.flexDirection = 'column'; // Stack checkbox and score
 
             const checkbox = document.createElement('div');
             checkbox.className = `custom-checkbox ${isPresent ? 'checked' : ''}`;
             cellDiv.appendChild(checkbox);
-
-            // Show participation score if > 0 or in edit mode
-            if (partScore > 0 || isEditMode) {
-                const scoreSpan = document.createElement('span');
-                scoreSpan.textContent = partScore > 0 ? partScore : '-';
-                scoreSpan.style.fontSize = '0.7rem';
-                scoreSpan.style.marginTop = '4px';
-                scoreSpan.style.color = '#7f8c8d';
-                cellDiv.appendChild(scoreSpan);
-            }
-
             td.appendChild(cellDiv);
 
             if (isEditMode) {
                 td.classList.add('editable');
-                // Left click: Toggle Attendance
                 td.onclick = (e) => {
                     e.preventDefault();
                     toggleAttendance(student, date, isPresent);
                 };
-                // Right click (contextmenu): Edit Participation
-                td.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    editParticipation(student, participation[student], date); // Pass date directly
-                };
             }
+            tr.appendChild(td);
+        });
+        attendanceTableBody.appendChild(tr);
+    });
 
+    // Render Add Date Row (Footer) for Attendance
+    if (isEditMode) {
+        const trAdd = document.createElement('tr');
+        const tdAdd = document.createElement('td');
+        tdAdd.colSpan = students.length + 1;
+        tdAdd.innerHTML = '<button class="glow-btn small" style="width: 100%;">+ Add Attendance Date</button>';
+        tdAdd.style.padding = '10px';
+        tdAdd.querySelector('button').onclick = () => addDate('attendance');
+        trAdd.appendChild(tdAdd);
+        attendanceTableBody.appendChild(trAdd);
+    }
+}
+
+function renderParticipationTable() {
+    if (!studentData || !participationTableHead || !participationTableBody) return;
+
+    const participation = studentData.participation || {};
+    // Students are ROWS
+    const students = Object.keys(studentData.attendance || {}).sort(); // Use attendance list for consistent rows? Or part list?
+    // Ideally union of both, but let's use attendance list as master roster
+    
+    // Dates are COLUMNS
+    let dates = new Set();
+    if (participation) {
+        Object.values(participation).forEach(record => {
+            Object.keys(record).forEach(date => dates.add(date));
+        });
+    }
+    dates = Array.from(dates).sort();
+
+    // Render Header (Name + Dates + Add)
+    participationTableHead.innerHTML = '<th>Name</th>';
+    dates.forEach(date => {
+        const th = document.createElement('th');
+        th.textContent = date.slice(5); // MM-DD
+        if (isEditMode) {
+            th.classList.add('editable');
+            th.title = "Right-click to delete";
+            th.oncontextmenu = (e) => {
+                e.preventDefault();
+                if (confirm(`Delete participation date ${date}?`)) {
+                    deleteDate(date, 'participation');
+                }
+            };
+        }
+        participationTableHead.appendChild(th);
+    });
+
+    // Add Date Column (+)
+    if (isEditMode) {
+        const thAdd = document.createElement('th');
+        thAdd.textContent = '+';
+        thAdd.className = 'editable';
+        thAdd.style.fontSize = '1.2rem';
+        thAdd.style.color = 'var(--accent-color)';
+        thAdd.onclick = () => addDate('participation');
+        participationTableHead.appendChild(thAdd);
+    }
+
+    // Render Body (Rows = Students)
+    participationTableBody.innerHTML = '';
+    students.forEach(student => {
+        const tr = document.createElement('tr');
+        
+        // Name Column
+        const tdName = document.createElement('td');
+        tdName.textContent = student;
+        tdName.style.fontWeight = "bold";
+        tr.appendChild(tdName);
+
+        // Date Columns (Scores)
+        dates.forEach(date => {
+            const td = document.createElement('td');
+            const score = (participation[student] && participation[student][date]) || 0;
+            
+            td.textContent = score > 0 ? score : '-';
+            if (score === 0) td.style.color = '#ccc';
+
+            if (isEditMode) {
+                td.classList.add('editable');
+                td.onclick = () => editParticipation(student, participation[student], date);
+            }
             tr.appendChild(td);
         });
 
-        studentTableBody.appendChild(tr);
+        // Empty cell for + column
+        if (isEditMode) {
+            const tdEmpty = document.createElement('td');
+            tr.appendChild(tdEmpty);
+        }
+
+        participationTableBody.appendChild(tr);
     });
+}
+
+
+function renameDate(oldDate) {
+    if (!currentUser) return;
+    const newDate = prompt("Rename date (YYYY-MM-DD):", oldDate);
+    if (!newDate || newDate === oldDate) return;
+    
+    // Regex check
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(newDate)) {
+        alert("Invalid format. Use YYYY-MM-DD");
+        return;
+    }
+
+    const updates = {};
+    // Move data for all students
+    if (studentData.attendance) {
+        Object.keys(studentData.attendance).forEach(student => {
+            const val = studentData.attendance[student][oldDate];
+            if (val !== undefined) {
+                updates[`icep-ntu/attendance/${student}/${newDate}`] = val;
+                updates[`icep-ntu/attendance/${student}/${oldDate}`] = null;
+            }
+        });
+    }
+    if (studentData.participation) {
+        Object.keys(studentData.participation).forEach(student => {
+            const val = studentData.participation[student][oldDate];
+            if (val !== undefined) {
+                updates[`icep-ntu/participation/${student}/${newDate}`] = val;
+                updates[`icep-ntu/participation/${student}/${oldDate}`] = null;
+            }
+        });
+    }
+    
+    update(ref(db), updates).catch(err => alert(err.message));
+}
+
+function deleteDate(date, type) {
+    if (!currentUser) return;
+    const updates = {};
+    
+    if (type === 'attendance' && studentData.attendance) {
+        Object.keys(studentData.attendance).forEach(student => {
+            updates[`icep-ntu/attendance/${student}/${date}`] = null;
+        });
+    }
+    
+    if (type === 'participation' && studentData.participation) {
+        Object.keys(studentData.participation).forEach(student => {
+            updates[`icep-ntu/participation/${student}/${date}`] = null;
+        });
+    }
+    
+    update(ref(db), updates).catch(err => alert(err.message));
 }
 
 function calculateAndRenderChart() {
@@ -715,35 +837,57 @@ function editParticipation(student, studentPartData, dateOverride) {
     update(ref(db), updates).catch(err => alert(err.message));
 }
 
-// Add Date Function
-if (addDateBtn) {
-    addDateBtn.addEventListener('click', () => {
+// Add Student Function
+if (addStudentBtn) {
+    addStudentBtn.addEventListener('click', () => {
         if (!currentUser) return;
-
-        const dateStr = prompt("Enter new date (YYYY-MM-DD):");
-        if (!dateStr) return;
-
-        // Validate date format
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        if (!dateRegex.test(dateStr)) {
-            alert("Invalid format. Please use YYYY-MM-DD.");
-            return;
-        }
-
-        // To "add" a date, we just need to set a value for at least one student.
-        // Or we can just rely on the fact that if we add it to the UI, we might want to initialize it.
-        // Let's initialize everyone to 'false' (absent) for this date to ensure it shows up.
-
-        if (!studentData || !studentData.attendance) return;
-        const students = Object.keys(studentData.attendance);
-
+        const name = prompt("Enter new student name:");
+        if (!name) return;
+        
+        // We need to add an entry for this student.
+        // We can just add a dummy attendance record for the most recent date, or just let the render handle it if we update the data structure.
+        // But currently data structure is attendance/Student/Date.
+        // If we add a key under attendance/Student, they exist.
+        // Let's pick the first available date or today.
+        
+        const today = new Date().toISOString().slice(0, 10);
         const updates = {};
-        students.forEach(student => {
-            updates[`icep-ntu/attendance/${student}/${dateStr}`] = false;
-        });
-
+        updates[`icep-ntu/attendance/${name}/${today}`] = false; // Initialize as absent
+        
         update(ref(db), updates)
-            .then(() => alert(`Date ${dateStr} added!`))
+            .then(() => alert(`Student ${name} added!`))
             .catch(err => alert(err.message));
     });
+}
+
+// Add Date Logic (Universal)
+function addDate(type = 'attendance') {
+    if (!currentUser) return;
+
+    const dateStr = prompt(`Enter new ${type} date (YYYY-MM-DD):`);
+    if (!dateStr) return;
+
+    // Validate date format
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(dateStr)) {
+        alert("Invalid format. Please use YYYY-MM-DD.");
+        return;
+    }
+
+    if (!studentData) return;
+    // Use attendance list as master student list
+    const students = Object.keys(studentData.attendance || {});
+
+    const updates = {};
+    students.forEach(student => {
+        if (type === 'attendance') {
+            updates[`icep-ntu/attendance/${student}/${dateStr}`] = false;
+        } else {
+            updates[`icep-ntu/participation/${student}/${dateStr}`] = 0;
+        }
+    });
+
+    update(ref(db), updates)
+        .then(() => alert(`${type} Date ${dateStr} added!`))
+        .catch(err => alert(err.message));
 }
