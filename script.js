@@ -86,6 +86,11 @@ function initEarth() {
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 5;
 
+    // Adjust for mobile (smaller earth view)
+    if (window.innerWidth < 768) {
+        camera.position.z = 7; // Move camera back on mobile
+    }
+
     // Renderer
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -257,71 +262,136 @@ function initEarth() {
     // Slide Scroll Logic
     const slides = gsap.utils.toArray('.info-block');
     const bgSlides = gsap.utils.toArray('.bg-slide');
+    
+    // Check if mobile (width < 768px)
+    const isMobile = window.innerWidth < 768;
 
-    // Master Timeline
-    const tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: "#about",
+    if (isMobile) {
+        // Mobile: Continuous Scroll (No Pinning)
+        // We still want background changes, but triggered by scroll position
+        
+        // Initial State: Show first background immediately on mobile (Hero)
+        // Removed per user request (let it fade in on scroll)
+        // if (bgSlides.length > 0) {
+        //    gsap.set(bgSlides[0], { opacity: 1 });
+        // }
+
+        // 1. Ensure sections are static (CSS handles this via media query, but let's enforce)
+        // Actually, let's rely on ScrollTrigger to toggle backgrounds based on which info-block is in view.
+        
+        // Fade out Hero early
+        ScrollTrigger.create({
+            trigger: '.hero-text',
             start: "top top",
-            end: "+=800%", // Much longer scroll distance
-            pin: true,
-            scrub: 1,
-            snap: {
-                snapTo: 1 / (slides.length),
-                duration: { min: 0.2, max: 0.5 },
-                delay: 0.1,
-                ease: "power1.inOut"
+            end: "bottom top",
+            scrub: true,
+            onUpdate: (self) => {
+                document.querySelector('.hero-text').style.opacity = 1 - self.progress;
+                document.getElementById('earth-container').style.opacity = 1 - self.progress; // Fade earth too
             }
+        });
+
+        slides.forEach((slide, i) => {
+            ScrollTrigger.create({
+                trigger: slide,
+                start: "top center", // When slide hits center of viewport
+                end: "bottom center",
+                onEnter: () => updateBackground(i),
+                onEnterBack: () => updateBackground(i)
+            });
+            
+            // Simple fade in for blocks
+            gsap.fromTo(slide, 
+                { opacity: 0, y: 50 },
+                { 
+                    opacity: 1, y: 0, duration: 0.5, 
+                    scrollTrigger: {
+                        trigger: slide,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+        
+        function updateBackground(index) {
+             bgSlides.forEach((bg, i) => {
+                 gsap.to(bg, { opacity: i === index ? 1 : 0, duration: 0.5 });
+             });
         }
-    });
 
-    // Hero Fade Out
-    tl.to('.hero-text', { opacity: 0, duration: 0.5 }, 0);
+    } else {
+        // Desktop: Pinned Slides (Existing Logic)
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top top",
+                end: "+=800%", // Much longer scroll distance
+                pin: true,
+                scrub: 1,
+                snap: {
+                    snapTo: 1 / (slides.length),
+                    duration: { min: 0.2, max: 0.5 },
+                    delay: 0.1,
+                    ease: "power1.inOut"
+                }
+            }
+        });
 
-    // Earth Fade Out (Hide when first slide appears)
-    // Start fading out slightly before the first slide fully appears
-    tl.to('#earth-container', { opacity: 0, duration: 0.5, pointerEvents: 'none' }, 0.2);
+        // Hero Fade Out
+        tl.to('.hero-text', { opacity: 0, duration: 0.5 }, 0);
+        tl.to('#earth-container', { opacity: 0, duration: 0.5, pointerEvents: 'none' }, 0.2);
 
-    // Slides & Backgrounds Animation
-    // Timeline: 0 -> 4
-    // 0-1: Hero out, Slide 1 in
-    // 1-2: Slide 1 out, Slide 2 in
-    // ...
-
-    slides.forEach((slide, i) => {
-        // Slide Enter
-        // i=0 (Slide 1): Starts at 0.5
-        // Reduced duration to 0.5s for faster transition
-        tl.to(slide, { opacity: 1, duration: 0.5 }, i + 0.5);
-
-        // Background Enter (Sync with slide)
-        if (bgSlides[i]) {
-            tl.to(bgSlides[i], { opacity: 1, duration: 0.5 }, i + 0.5);
-        }
-
-        // Slide Exit (except last)
-        if (i < slides.length - 1) {
-            // Start exit earlier to reduce overlap
-            // Enter starts at i+0.5, ends at i+1.0
-            // Next Enter starts at (i+1)+0.5 = i+1.5
-            // Exit should finish by i+1.5
-            // Let's start exit at i+1.0 and take 0.5s
-            tl.to(slide, { opacity: 0, duration: 0.5 }, i + 1.2);
-            // Background Exit
+        slides.forEach((slide, i) => {
+            tl.to(slide, { opacity: 1, duration: 0.5 }, i + 0.5);
             if (bgSlides[i]) {
-                tl.to(bgSlides[i], { opacity: 0, duration: 0.5 }, i + 1.2);
+                tl.to(bgSlides[i], { opacity: 1, duration: 0.5 }, i + 0.5);
             }
+            if (i < slides.length - 1) {
+                tl.to(slide, { opacity: 0, duration: 0.5 }, i + 1.2);
+                if (bgSlides[i]) {
+                    tl.to(bgSlides[i], { opacity: 0, duration: 0.5 }, i + 1.2);
+                }
+            }
+        });
+    }
+}
+
+    // --- NAVIGATION LOGIC ---
+    // (Simpler now with multi-page)
+    function setupNavigation() {
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', () => {
+                hamburgerBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                
+                // Stagger animation for links
+                const links = mobileMenu.querySelectorAll('.mobile-menu-link');
+                links.forEach((link, index) => {
+                    if (mobileMenu.classList.contains('active')) {
+                        link.style.transitionDelay = `${0.1 + index * 0.1}s`;
+                    } else {
+                        link.style.transitionDelay = '0s';
+                    }
+                });
+            });
         }
-    });
-}
+        
+        // Close menu function (global)
+        window.closeMobileMenu = () => {
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        };
+    }
+    setupNavigation();
 
-// --- NAVIGATION LOGIC ---
-// (Simpler now with multi-page)
-function setupNavigation() {
-    // No-op or handle mobile menu toggle if needed
-}
-
-function switchTab(targetId) {
+    function switchTab(targetId) {
     // Only needed for About page sections if any
     if (targetId === 'about') {
         // Refresh ScrollTrigger

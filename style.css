@@ -77,13 +77,19 @@ nav {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 20px 40px;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 1), transparent);
     transition: background 0.3s ease;
+}
+
+/* Hide Mobile Menu on Desktop */
+.hamburger-menu,
+.mobile-menu-overlay {
+    display: none;
 }
 
 .logo-container {
@@ -657,18 +663,6 @@ tr:hover td {
     font-size: 0.9rem;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .hero-text h1 {
-        font-size: 3rem;
-    }
-
-    .nav-links {
-        display: none;
-        /* Mobile menu implementation omitted for brevity, could add hamburger */
-    }
-}
-
 /* Quiz Styles */
 #quiz {
     display: none;
@@ -782,4 +776,140 @@ tr:hover td {
 
 .custom-checkbox.checked::after {
     content: none; /* No checkmark */
+}
+
+/* Responsive Media Query moved to end to override other styles */
+@media (max-width: 768px) {
+    .hero-text h1 {
+        font-size: 3rem;
+    }
+
+    .nav-links {
+        display: none;
+        /* Mobile menu implementation omitted for brevity, could add hamburger */
+    }
+
+    /* Mobile Optimization for About Section */
+    #about {
+        height: auto; /* Allow continuous scroll */
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .info-block {
+        position: relative; /* Not absolute/pinned */
+        height: auto;
+        min-height: 80vh; /* Each block takes most of screen */
+        opacity: 1; /* Visible by default (handled by GSAP) */
+        padding: 60px 20px;
+        margin-bottom: 20px;
+    }
+
+    .info-block-content {
+        background: rgba(255, 255, 255, 0.8); /* More opaque on mobile for readability */
+        padding: 30px;
+    }
+    
+    .info-block h3 {
+        font-size: 2rem;
+    }
+    
+    .info-block p, .info-block li {
+        font-size: 1.1rem;
+    }
+
+    /* Adjust Earth Container */
+    #earth-container {
+        height: 50vh; /* Smaller earth at top */
+        position: fixed;
+    }
+    
+    .hero-text {
+        height: 100vh; /* Full height for centering */
+    }
+
+    /* Quiz Mobile Adjustments */
+    .quiz-question-text {
+        font-size: 1rem;
+    }
+    .quiz-option {
+        font-size: 1rem;
+        padding: 8px;
+    }
+    #quiz-container {
+        padding: 10px;
+    }
+
+    /* Mobile Menu */
+    .nav-links {
+        display: none; /* Hidden by default on mobile */
+    }
+
+    /* Hamburger Menu Icon */
+    .hamburger-menu {
+        display: flex; /* Show on mobile */
+        flex-direction: column;
+        justify-content: space-around;
+        width: 25px;
+        height: 20px;
+        cursor: pointer;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 100%;
+        height: 3px;
+        background-color: var(--accent-color);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    /* Mobile Menu Overlay */
+    .mobile-menu-overlay {
+        display: flex; /* Enable flex layout */
+        position: fixed;
+        top: 0;
+        right: -100%; /* Hidden off-screen */
+        width: 100%; /* Full width */
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.4s ease;
+    }
+
+
+    .mobile-menu-overlay.active {
+        right: 0;
+    }
+
+    .mobile-menu-link {
+        font-family: var(--font-display);
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        margin: 15px 0;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active .mobile-menu-link {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Hamburger Animation when Active */
+    .hamburger-menu.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger-menu.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
 }
