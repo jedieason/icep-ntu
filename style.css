@@ -570,8 +570,7 @@ tr:hover td {
     transform: translateX(-50%);
     font-size: 0.8rem;
     font-weight: bold;
-    color: #27ae60;
-    /* Green Text */
+    color: #1c1c72;
     opacity: 0;
     transition: opacity 0.5s ease 1s;
 }
