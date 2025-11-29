@@ -793,6 +793,21 @@ tr:hover td {
     /* No checkmark */
 }
 
+/* Typing Animation Cursor */
+.typing-cursor::after {
+    content: '|';
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink-cursor 0.7s infinite;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 /* Responsive Media Query moved to end to override other styles */
 @media (max-width: 768px) {
     .hero-text h1 {
