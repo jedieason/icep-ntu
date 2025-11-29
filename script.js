@@ -527,11 +527,12 @@ function renderParticipationChart(data) {
     container.innerHTML = ''; // Clear existing
 
     const names = Object.keys(data);
-    const counts = Object.values(data);
-    const maxCount = Math.max(...counts, 10); // Ensure at least some height
+    const values = Object.values(data); // Array of { total, dates }
+    // Use .total for max calculation
+    const maxCount = Math.max(...values.map(v => v.total), 10); 
 
     names.forEach((name, i) => {
-        const count = counts[i];
+        const { total: count, dates } = values[i];
         const percentage = (count / maxCount) * 100;
 
         const barContainer = document.createElement('div');
@@ -548,6 +549,14 @@ function renderParticipationChart(data) {
         value.className = 'bar-value';
         value.textContent = count;
         bar.appendChild(value);
+
+        // Tooltip for dates
+        if (dates && dates.length > 0) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'bar-tooltip';
+            tooltip.innerHTML = dates.join('<br>');
+            bar.appendChild(tooltip);
+        }
 
         const label = document.createElement('div');
         label.className = 'bar-label';
@@ -679,7 +688,7 @@ function renderAttendanceTable() {
 
         // Date Column
         const tdDate = document.createElement('td');
-        tdDate.textContent = date.slice(5); // MM-DD
+        tdDate.textContent = date.slice(5).replace('-', '/'); // MM/DD
         tdDate.style.fontWeight = "bold";
         
         if (isEditMode) {
@@ -753,7 +762,7 @@ function renderParticipationTable() {
     participationTableHead.innerHTML = '<th>Name</th>';
     dates.forEach(date => {
         const th = document.createElement('th');
-        th.textContent = date.slice(5); // MM-DD
+        th.textContent = date.slice(5).replace('-', '/'); // MM/DD
         if (isEditMode) {
             th.classList.add('editable');
             th.title = "Click to rename, Right-click to delete";
@@ -882,8 +891,19 @@ function calculateAndRenderChart() {
 
     Object.keys(participation).forEach(student => {
         let total = 0;
-        Object.values(participation[student]).forEach(val => total += val);
-        chartData[student] = total;
+        let datesList = [];
+        
+        const dateEntries = Object.entries(participation[student]);
+        // Sort dates
+        dateEntries.sort((a, b) => a[0].localeCompare(b[0]));
+
+        dateEntries.forEach(([date, val]) => {
+            if (val > 0) {
+                total += val;
+                datesList.push(`${date.slice(5).replace('-', '/')}: ${val}`);
+            }
+        });
+        chartData[student] = { total, dates: datesList };
     });
 
     renderParticipationChart(chartData);
