@@ -497,7 +497,8 @@ tr:hover td {
 }
 
 .editable:hover {
-    background-color: rgba(44, 62, 80, 0.05); /* Light hover background */
+    background-color: rgba(44, 62, 80, 0.05);
+    /* Light hover background */
 }
 
 .mode-badge {
@@ -536,8 +537,10 @@ tr:hover td {
     align-items: flex-end;
     justify-content: space-around;
     padding: 20px;
-    overflow-x: auto; /* Enable horizontal scroll if too narrow */
-    min-width: 100%;  /* Ensure it takes full width */
+    overflow-x: auto;
+    /* Enable horizontal scroll if too narrow */
+    min-width: 100%;
+    /* Ensure it takes full width */
 }
 
 .bar-container {
@@ -680,13 +683,15 @@ tr:hover td {
     width: 100%;
     max-width: 800px;
     padding: 40px;
-    margin: 0 auto; /* Center container itself */
+    margin: 0 auto;
+    /* Center container itself */
 }
 
 .quiz-content {
     max-width: 600px;
     text-align: center;
-    margin: 0 auto; /* Center content within container */
+    margin: 0 auto;
+    /* Center content within container */
 }
 
 .quiz-question-text {
@@ -702,13 +707,16 @@ tr:hover td {
 .quiz-option {
     display: block;
     width: 100%;
-    max-width: 500px; /* Restrict width for centering */
-    margin: 20px auto; /* Center horizontally */
+    max-width: 500px;
+    /* Restrict width for centering */
+    margin: 20px auto;
+    /* Center horizontally */
     padding: 20px 30px;
     /* Minimalist: Simple border, transparent bg */
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-    background: transparent; /* No background color */
+    background: transparent;
+    /* No background color */
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
@@ -728,15 +736,19 @@ tr:hover td {
 
 .quiz-option.correct {
     background: transparent;
-    color: #27ae60; /* Lower saturation green */
-    border: 3px solid #27ae60; /* Thicker border */
+    color: #27ae60;
+    /* Lower saturation green */
+    border: 3px solid #27ae60;
+    /* Thicker border */
     box-shadow: 0 0 15px rgba(39, 174, 96, 0.2);
 }
 
 .quiz-option.incorrect {
     background: transparent;
-    color: #c0392b; /* Lower saturation red */
-    border: 3px solid #c0392b; /* Thicker border */
+    color: #c0392b;
+    /* Lower saturation red */
+    border: 3px solid #c0392b;
+    /* Thicker border */
     box-shadow: 0 0 15px rgba(192, 57, 43, 0.2);
 }
 
@@ -760,10 +772,12 @@ tr:hover td {
 }
 
 .custom-checkbox {
-    width: 12px; /* Smaller */
+    width: 12px;
+    /* Smaller */
     height: 12px;
     border: 1px solid var(--text-secondary);
-    border-radius: 4px; /* Rounded */
+    border-radius: 4px;
+    /* Rounded */
     transition: all 0.2s ease;
     position: relative;
     background: white;
@@ -775,7 +789,8 @@ tr:hover td {
 }
 
 .custom-checkbox.checked::after {
-    content: none; /* No checkmark */
+    content: none;
+    /* No checkmark */
 }
 
 /* Responsive Media Query moved to end to override other styles */
@@ -791,63 +806,75 @@ tr:hover td {
 
     /* Mobile Optimization for About Section */
     #about {
-        height: auto; /* Allow continuous scroll */
+        height: auto;
+        /* Allow continuous scroll */
         min-height: 100vh;
         overflow: visible;
     }
 
     .info-block {
-        position: relative; /* Not absolute/pinned */
+        position: relative;
+        /* Not absolute/pinned */
         height: auto;
-        min-height: 80vh; /* Each block takes most of screen */
-        opacity: 1; /* Visible by default (handled by GSAP) */
+        min-height: 80vh;
+        /* Each block takes most of screen */
+        opacity: 1;
+        /* Visible by default (handled by GSAP) */
         padding: 60px 20px;
         margin-bottom: 20px;
     }
 
     .info-block-content {
-        background: rgba(255, 255, 255, 0.8); /* More opaque on mobile for readability */
+        background: rgba(255, 255, 255, 0.8);
+        /* More opaque on mobile for readability */
         padding: 30px;
     }
-    
+
     .info-block h3 {
         font-size: 2rem;
     }
-    
-    .info-block p, .info-block li {
+
+    .info-block p,
+    .info-block li {
         font-size: 1.1rem;
     }
 
     /* Adjust Earth Container */
     #earth-container {
-        height: 50vh; /* Smaller earth at top */
+        height: 50vh;
+        /* Smaller earth at top */
         position: fixed;
     }
-    
+
     .hero-text {
-        height: 100vh; /* Full height for centering */
+        height: 100vh;
+        /* Full height for centering */
     }
 
     /* Quiz Mobile Adjustments */
     .quiz-question-text {
         font-size: 1rem;
     }
+
     .quiz-option {
         font-size: 1rem;
         padding: 8px;
     }
+
     #quiz-container {
         padding: 10px;
     }
 
     /* Mobile Menu */
     .nav-links {
-        display: none; /* Hidden by default on mobile */
+        display: none;
+        /* Hidden by default on mobile */
     }
 
     /* Hamburger Menu Icon */
     .hamburger-menu {
-        display: flex !important; /* Show on mobile */
+        display: flex !important;
+        /* Show on mobile */
         flex-direction: column;
         justify-content: space-around;
         width: 25px;
@@ -860,18 +887,22 @@ tr:hover td {
     .hamburger-line {
         width: 100%;
         height: 3px;
-        background-color: #2c3e50 !important; /* Force dark blue/gray color */
+        background-color: #2c3e50 !important;
+        /* Force dark blue/gray color */
         border-radius: 2px;
         transition: all 0.3s ease;
     }
-    
+
     /* Mobile Menu Overlay */
     .mobile-menu-overlay {
-        display: flex !important; /* Enable flex layout */
+        display: flex !important;
+        /* Enable flex layout */
         position: fixed;
         top: 0;
-        right: -100%; /* Hidden off-screen */
-        width: 100%; /* Full width */
+        right: -100%;
+        /* Hidden off-screen */
+        width: 100%;
+        /* Full width */
         height: 100vh;
         background: rgba(255, 255, 255, 0.98);
         z-index: 1001;
@@ -903,14 +934,241 @@ tr:hover td {
         transform: translateY(0);
     }
 
+    /* Active State for Mobile Menu */
+    .mobile-menu-link.active {
+        position: relative;
+        color: var(--accent-color);
+    }
+
+    .mobile-menu-link.active::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-color);
+    }
+
     /* Hamburger Animation when Active */
     .hamburger-menu.active .hamburger-line:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px); /* Adjusted translation */
+        transform: rotate(45deg) translate(5px, 5px);
+        /* Adjusted translation */
     }
+
     .hamburger-menu.active .hamburger-line:nth-child(2) {
         opacity: 0;
     }
+
     .hamburger-menu.active .hamburger-line:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px); /* Adjusted translation */
+        transform: rotate(-45deg) translate(5px, -5px);
+        /* Adjusted translation */
+    }
+
+    /* Resource Card Mobile Adjustments */
+    .resource-grid {
+        grid-template-columns: 1fr;
+        padding: 0 10px; /* Add slight padding to grid container if needed, or rely on section padding */
+    }
+
+    .resource-card {
+        padding: 25px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box; /* Ensure padding doesn't add to width */
+    }
+}
+
+/* Faculty Page Styles */
+.faculty-section {
+    padding: 120px 20px 0px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.faculty-header {
+    text-align: center;
+    margin-bottom: 80px;
+    position: relative;
+    /* For canvas positioning */
+}
+
+#flight-canvas {
+    position: absolute;
+    top: -20%;
+    /* Move up to center earth behind header */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 800px;
+    /* Much larger height for big earth */
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.8;
+    /* Make it visible */
+}
+
+.faculty-header h1 {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.faculty-header p {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.faculty-group-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.faculty-card {
+    display: flex;
+    align-items: center;
+    /* Center vertically */
+    gap: 60px;
+    margin-bottom: 40px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 50px;
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Removed opacity: 0 and transform for visibility safety */
+}
+
+.faculty-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+}
+
+.faculty-image-container {
+    flex-shrink: 0;
+    position: relative;
+    padding: 15px;
+    /* Gap between image and border */
+    border: 1px solid var(--accent-color);
+    /* Thin deep blue circle */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Rotating outer ring effect */
+.faculty-image-container::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    border-top-color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+    opacity: 0.3;
+    animation: spin-slow 10s linear infinite;
+}
+
+.faculty-avatar {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* Removed thick border */
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.3);
+    transition: transform 0.5s ease;
+    /* animation: float 6s ease-in-out infinite; REMOVED per user request */
+}
+
+.faculty-card:hover .faculty-avatar {
+    transform: scale(1.02);
+}
+
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Float animation removed */
+
+.faculty-info {
+    flex: 1;
+}
+
+.faculty-name {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.faculty-title {
+    font-size: 1.1rem;
+    color: var(--accent-secondary);
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.faculty-bio {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    text-align: justify;
+}
+
+@media (max-width: 900px) {
+    .faculty-header h1 {
+        font-size: 2.5rem;
+        /* Smaller header on mobile */
+    }
+
+    .faculty-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+        /* Less horizontal padding */
+    }
+
+    .faculty-avatar {
+        width: 180px;
+        /* Smaller avatar on mobile */
+        height: 180px;
+    }
+
+    .faculty-name {
+        font-size: 1.8rem;
+        /* Smaller name */
+    }
+
+    .faculty-title {
+        font-size: 1rem;
+    }
+
+    .faculty-bio {
+        text-align: left;
+        /* Keep left align for readability */
+        font-size: 1rem;
+        /* Slightly smaller text */
+        line-height: 1.6;
     }
 }

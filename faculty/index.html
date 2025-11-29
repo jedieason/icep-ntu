@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty - ICEP NTU</title>
+    <link rel="icon" href="../images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">MEET THE TEAM...</div>
+    </div>
+
+    <nav class="light-nav">
+        <div class="logo-container">
+            <img src="../images/logo.png" alt="NTU Medicine Logo" class="nav-logo">
+            <span class="nav-title">ICEP | NTU</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">About</a>
+            <a href="#" class="nav-link active">Faculty</a>
+            <a href="../student/" class="nav-link">Student Zone</a>
+        </div>
+
+        <!-- Hamburger Menu (Mobile) -->
+        <div class="hamburger-menu" id="hamburger-btn">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobile-menu">
+            <a href="../index.html" class="mobile-menu-link">About</a>
+            <a href="#" class="mobile-menu-link active" onclick="closeMobileMenu()">Faculty</a>
+            <a href="../student/" class="mobile-menu-link">Student Zone</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="faculty-section active">
+            <div class="faculty-header">
+                <canvas id="flight-canvas"></canvas>
+                <h1>Our Distinguished Faculty</h1>
+                <p>Leading the way in global medical education and research.</p>
+            </div>
+
+            <!-- Founder Section -->
+            <div class="faculty-group">
+                <div class="faculty-group-title">Founder of ICEP</div>
+
+                <div class="faculty-card">
+                    <div class="faculty-image-container">
+                        <img src="../images/Anette.png" alt="Dr. Anette Wu" class="faculty-avatar">
+                    </div>
+                    <div class="faculty-info">
+                        <h2 class="faculty-name">Dr. Anette Wu</h2>
+                        <div class="faculty-title">Founder & Director, ICEP</div>
+                        <div class="faculty-bio">
+                            <p>Dr. Anette Wu is an Associate Professor at Columbia University's Vagelos College of
+                                Physicians and Surgeons with appointments in Medicine and Pathology and Cell Biology.
+                                She has a diverse background, training in Transplantation and General Surgery in Germany
+                                and the U.S. (Harvard/MGH), and holding degrees including an MD, MPH, and PhD in
+                                transplantation physiology.</p>
+                            <br>
+                            <p>Dr. Wu is most celebrated as the founding director of the International Collaboration and
+                                Exchange Program (ICEP). This innovative, two-semester program is anchored in anatomy
+                                and connects 400-500 hand-selected students annually from 26 medical schools across five
+                                continents. Her vision is to cultivate future global healthcare leaders who can
+                                collaborate effectively during worldwide health crises, fostering a global medical
+                                community through science diplomacy and shared learning. In 2023, her significant
+                                contributions were recognized with the Columbia University Alumni Medal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NTU Team Section -->
+            <div class="faculty-group">
+                <div class="faculty-group-title">NTU Teaching Team</div>
+
+                <div class="faculty-card">
+                    <div class="faculty-image-container">
+                        <img src="../images/Chien.png" alt="Professor Chung-Liang Chien" class="faculty-avatar">
+                    </div>
+                    <div class="faculty-info">
+                        <h2 class="faculty-name">Professor Chung-Liang Chien</h2>
+                        <div class="faculty-title">Professor, NTU College of Medicine</div>
+                        <div class="faculty-bio">
+                            <p>Professor Chung-Liang Chien is a distinguished faculty member at National Taiwan
+                                University (NTU), holding a Ph.D. from Columbia University. His key research areas are
+                                neurobiology and stem cell biology, and he is recognized for actively mentoring
+                                international medical students.</p>
+                            <br>
+                            <p>Beyond his academic work, Professor Chien has held significant institutional and
+                                governmental roles, including Associate Dean of the NTU College of Medicine and Deputy
+                                Minister of the Ministry of Science and Technology. He also served as President of the
+                                Association of Anatomists of the Republic of China and the Taiwan Society for Stem Cell
+                                Research. He currently functions as the CEO of the Institute for Biotechnology and
+                                Medicine Industry (IBMI), fostering collaboration between research and bio-industry in
+                                Taiwan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faculty-card">
+                    <div class="faculty-image-container">
+                        <img src="../images/Liao.png" alt="Professor Meng-Lin Liao" class="faculty-avatar">
+                    </div>
+                    <div class="faculty-info">
+                        <h2 class="faculty-name">Professor Meng-Lin Liao</h2>
+                        <div class="faculty-title">Assistant Professor, NTU College of Medicine</div>
+                        <div class="faculty-bio">
+                            <p>Dr. Meng-Lin Liao is an Assistant Professor at National Taiwan University (NTU) who
+                                initially practiced clinical occupational therapy before transitioning to academia. Her
+                                frustration with the clinical limitations and a passion for anatomy inspired her to earn
+                                a Master’s and Ph.D. in Developmental Biology, focusing her research on zebrafish
+                                models.</p>
+                            <br>
+                            <p>Her extensive experience serving as a teaching assistant for nine years in courses like
+                                gross anatomy and neuroanatomy cemented her commitment to education. She is also our
+                                teacher in third-year medicine for histology, anatomy, and embryology, and is extremely
+                                patient with us. This dedication led her to embrace anatomy education research,
+                                culminating in her receiving the prestigious Early-Career Anatomist Publication Award
+                                from Anatomical Sciences Education.</p>
+                            <br>
+                            <p>Dr. Liao views this award as validating her resilient career shift and commitment to
+                                advancing the field. She continues to make an impact by promoting the Taiwan Brain Bank
+                                and strengthening the integration of anatomical knowledge with clinical training through
+                                workshops and collaborations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script type="module">
+        import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+
+        console.log("Faculty page script loaded");
+
+        // Failsafe: Force hide loader after 3 seconds max
+        setTimeout(() => {
+            const loader = document.getElementById('loading-screen');
+            if (loader && loader.style.display !== 'none') {
+                console.warn("Loader failsafe triggered");
+                loader.style.display = 'none';
+                animateContent();
+            }
+        }, 3000);
+
+        // Loading Screen
+        window.addEventListener('load', () => {
+            console.log("Window load event fired");
+            const loader = document.getElementById('loading-screen');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    console.log("Loader hidden");
+                    // Trigger animations after load
+                    animateContent();
+                    init3DEarth(); // Start 3D Earth animation
+                }, 500);
+            }
+        });
+
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', () => {
+                console.log("Hamburger clicked");
+                hamburgerBtn.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+        }
+
+        window.closeMobileMenu = function () {
+            if (mobileMenu) {
+                mobileMenu.classList.remove('active');
+                if (hamburgerBtn) hamburgerBtn.classList.remove('active');
+            }
+        }
+
+        // GSAP Animations
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        } else {
+            console.error("GSAP not loaded");
+        }
+
+        function animateContent() {
+            console.log("Animating content");
+            // Header Animation
+            gsap.from(".faculty-header", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+
+            // Card Animations
+            const cards = document.querySelectorAll('.faculty-card');
+            console.log(`Found ${cards.length} faculty cards`);
+            cards.forEach((card, index) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 85%", // Start when top of card hits 85% of viewport height
+                        toggleActions: "play none none reverse"
+                    },
+                    duration: 0.8,
+                    y: 50, // Animate FROM 50px down
+                    opacity: 0, // Animate FROM opacity 0
+                    ease: "power3.out",
+                    delay: index * 0.1 // Stagger slightly
+                });
+            });
+        }
+
+        // 3D Network Earth Animation
+        function init3DEarth() {
+            const canvas = document.getElementById('flight-canvas');
+            if (!canvas) return;
+
+            // Scene Setup
+            const scene = new THREE.Scene();
+            // Camera
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / 800, 0.1, 1000);
+            camera.position.z = 14; // Adjusted size (between 18 and 10)
+            camera.position.y = 2.5; // Adjusted height (between 0 and 4.5)
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, 800);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Earth Group
+            const earthGroup = new THREE.Group();
+            scene.add(earthGroup);
+
+            // 1. Create Points (Dots)
+            const particleCount = 400; // More particles for density
+            const radius = 7; // Slightly larger radius
+            const particles = new Float32Array(particleCount * 3);
+            const particleGeometry = new THREE.BufferGeometry();
+            const particlePositions = [];
+
+            for (let i = 0; i < particleCount; i++) {
+                // Random point on sphere surface
+                const phi = Math.acos(-1 + (2 * i) / particleCount);
+                const theta = Math.sqrt(particleCount * Math.PI) * phi;
+
+                const x = radius * Math.cos(theta) * Math.sin(phi);
+                const y = radius * Math.sin(theta) * Math.sin(phi);
+                const z = radius * Math.cos(phi);
+
+                particles[i * 3] = x;
+                particles[i * 3 + 1] = y;
+                particles[i * 3 + 2] = z;
+                particlePositions.push(new THREE.Vector3(x, y, z));
+            }
+
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
+            const particleMaterial = new THREE.PointsMaterial({
+                color: 0x2c3e50, // Deep Blue
+                size: 0.15,
+                transparent: true,
+                opacity: 0.8
+            });
+            const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            earthGroup.add(particleSystem);
+
+            // 2. Create Connecting Lines
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0x2c3e50,
+                transparent: true,
+                opacity: 0.15
+            });
+
+            const lineGeometry = new THREE.BufferGeometry();
+            const linePositions = [];
+
+            // Connect nearby points
+            for (let i = 0; i < particleCount; i++) {
+                for (let j = i + 1; j < particleCount; j++) {
+                    const dist = particlePositions[i].distanceTo(particlePositions[j]);
+                    if (dist < 2.5) { // Threshold for connection
+                        linePositions.push(
+                            particlePositions[i].x, particlePositions[i].y, particlePositions[i].z,
+                            particlePositions[j].x, particlePositions[j].y, particlePositions[j].z
+                        );
+                    }
+                }
+            }
+
+            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            earthGroup.add(lines);
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+                earthGroup.rotation.y += 0.002; // Slow rotation
+                earthGroup.rotation.x += 0.0005; // Slight tilt rotation
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Resize Handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / 800;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, 800);
+            });
+        }
+    </script>
+</body>
+
+</html>
