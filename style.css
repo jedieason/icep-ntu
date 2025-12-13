@@ -536,7 +536,7 @@ tr:hover td {
     display: flex;
     align-items: flex-end;
     justify-content: space-around;
-    padding: 20px;
+    padding: 30px 20px 20px 20px;
     overflow-x: auto;
     /* Enable horizontal scroll if too narrow */
     min-width: 100%;
@@ -551,6 +551,7 @@ tr:hover td {
     height: 100%;
     width: 100%;
     margin: 0 10px;
+    position: relative;
 }
 
 .bar {
@@ -581,7 +582,7 @@ tr:hover td {
 
 .bar-tooltip {
     position: absolute;
-    bottom: 100%;
+    bottom: 35px;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.8);
@@ -597,7 +598,6 @@ tr:hover td {
     width: max-content;
     max-width: 250px;
     text-align: center;
-    margin-bottom: 30px;
     /* Above the value */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -613,7 +613,7 @@ tr:hover td {
     border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
 }
 
-.bar:hover .bar-tooltip {
+.bar-container:hover .bar-tooltip {
     opacity: 1;
 }
 

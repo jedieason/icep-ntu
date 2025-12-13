@@ -550,12 +550,14 @@ function renderParticipationChart(data) {
         value.textContent = count;
         bar.appendChild(value);
 
-        // Tooltip for dates
+        barContainer.appendChild(bar);
+
+        // Tooltip for dates - Moved to container for positioning relative to name
         if (dates && dates.length > 0) {
             const tooltip = document.createElement('div');
             tooltip.className = 'bar-tooltip';
             tooltip.innerHTML = dates.join('<br>');
-            bar.appendChild(tooltip);
+            barContainer.appendChild(tooltip);
         }
 
         const label = document.createElement('div');
